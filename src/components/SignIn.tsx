@@ -7,12 +7,11 @@ import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-// import Button from "@mui/material/Button";
-import PrimaryButton from "./atoms/PrimaryButton";
+import AtomButton from "./atoms/AtomButton";
+import AtomLabel from "./atoms/AtomLabel";
 
 const defaultTheme = createTheme();
 
@@ -28,7 +27,9 @@ const SignIn = () => {
 
 	return (
 		<ThemeProvider theme={defaultTheme}>
-			<Container component="main" maxWidth="xs">
+			<Container
+				component="main"
+				maxWidth="xs">
 				<CssBaseline />
 				<Box
 					sx={{
@@ -36,20 +37,17 @@ const SignIn = () => {
 						display: "flex",
 						flexDirection: "column",
 						alignItems: "center",
-					}}
-				>
-					<Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-						<LockOutlinedIcon />
-					</Avatar>
-					<Typography component="h1" variant="h5">
+					}}>
+					<AtomLabel
+						component="h1"
+						variant="h4">
 						Sign in
-					</Typography>
+					</AtomLabel>
 					<Box
 						component="form"
 						onSubmit={handleSubmit}
 						noValidate
-						sx={{ mt: 1 }}
-					>
+						sx={{ mt: 1 }}>
 						<TextField
 							margin="normal"
 							required
@@ -72,28 +70,35 @@ const SignIn = () => {
 						/>
 						<FormControlLabel
 							control={
-								<Checkbox value="remember" color="primary" />
+								<Checkbox
+									value="remember"
+									color="primary"
+								/>
 							}
 							label="Remember me"
 						/>
-						{/* <Button
+						<AtomButton
 							type="submit"
-							fullWidth
 							variant="contained"
-							sx={{ mt: 3, mb: 2 }}
-						>
+							isFullWidth={true}
+							sx={{ mt: 3, mb: 2 }}>
 							Sign In
-						</Button> */}
-						<PrimaryButton type="submit" variant="contained" />
+						</AtomButton>
 
 						<Grid container>
-							<Grid item xs>
-								<Link href="#" variant="body2">
+							<Grid
+								item
+								xs>
+								<Link
+									href="#"
+									variant="body2">
 									Forgot password?
 								</Link>
 							</Grid>
 							<Grid item>
-								<Link href="#" variant="body2">
+								<Link
+									href="#"
+									variant="body2">
 									{"Don't have an account? Sign Up"}
 								</Link>
 							</Grid>
