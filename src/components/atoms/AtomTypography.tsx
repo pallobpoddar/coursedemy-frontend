@@ -1,9 +1,10 @@
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import { SxProps } from "@mui/material";
 import React from "react";
 
 type Props = {
 	component: React.ElementType;
-	variant:
+	variant?:
 		| "body1"
 		| "body2"
 		| "button"
@@ -19,10 +20,11 @@ type Props = {
 		| "subtitle1"
 		| "subtitle2";
 	children: React.ReactNode;
+	sx?: SxProps;
 };
 
-const AtomLabel = (props: Props) => {
+const AtomTypography = (props: Props) => {
 	return <Typography {...props}>{props.children}</Typography>;
 };
 
-export default AtomLabel;
+export default AtomTypography;

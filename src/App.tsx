@@ -1,16 +1,15 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-import UserSignIn from "./components/pages/UserSignIn";
+import SignIn from "./components/pages/user/SignIn";
+import SignUp from "./components/pages/user/SignUp";
 
 const App = () => {
 	return (
 		<>
 			<Router>
 				<Routes>
-					<Route
-						path="/"
-						element={<UserSignIn />}
-					/>
+					<Route path="/" element={<SignIn />} />
+					<Route path="/user/signup" element={<SignUp />} />
 				</Routes>
 			</Router>
 		</>
