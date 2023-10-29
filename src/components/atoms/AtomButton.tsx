@@ -1,22 +1,17 @@
+import Button from "@mui/material/Button";
+import { SxProps } from "@mui/material";
 import React from "react";
-import { Button, SxProps } from "@mui/material";
 
 type Props = {
-	type: "button" | "submit" | "reset";
-	variant: "contained" | "outlined" | "text";
-	isFullWidth?: boolean;
+	type?: "button" | "submit" | "reset";
+	variant?: "contained" | "outlined" | "text";
+	fullWidth?: boolean;
 	children: React.ReactNode;
 	sx?: SxProps;
 };
 
 const AtomButton = (props: Props) => {
-	return (
-		<Button
-			{...props}
-			fullWidth={props.isFullWidth}>
-			{props.children}
-		</Button>
-	);
+	return <Button {...props}>{props.children}</Button>;
 };
 
 export default AtomButton;
