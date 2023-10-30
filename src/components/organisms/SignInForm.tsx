@@ -15,14 +15,6 @@ import { useForm, Controller } from "react-hook-form";
 
 const SignInForm = () => {
 	const [showPassword, setShowPassword] = useState(false);
-	// const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-	// 	event.preventDefault();
-	// 	const data = new FormData(event.currentTarget);
-	// 	console.log({
-	// 		email: data.get("email"),
-	// 		password: data.get("password"),
-	// 	});
-	// };
 
 	const {
 		handleSubmit,
@@ -42,7 +34,7 @@ const SignInForm = () => {
 			email: getValues("email"),
 			password: getValues("password"),
 		};
-		console.log("Hello, World!");
+		console.log(formData);
 	};
 
 	useEffect(() => {}, [errors]);
@@ -53,16 +45,16 @@ const SignInForm = () => {
 				display: "flex",
 				flexDirection: "column",
 				alignItems: "center",
-			}}>
-			<AtomTypography
-				component="h1"
-				variant="h4">
+			}}
+		>
+			<AtomTypography component="h1" variant="h4">
 				Sign in
 			</AtomTypography>
 			<Box
 				component="form"
+				sx={{ mt: 1 }}
 				onSubmit={handleSubmit(handlerOnSubmit)}
-				sx={{ mt: 1 }}>
+			>
 				<Controller
 					name="email"
 					control={control}
@@ -123,11 +115,18 @@ const SignInForm = () => {
 										<AtomIconButton
 											aria-label="toggle password visibility"
 											edge="end"
-											onClick={() => setShowPassword(!showPassword)}
-											onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) =>
-												e.preventDefault()
-											}>
-											{showPassword ? <VisibilityOff /> : <Visibility />}
+											onClick={() =>
+												setShowPassword(!showPassword)
+											}
+											onMouseDown={(
+												e: React.MouseEvent<HTMLButtonElement>
+											) => e.preventDefault()}
+										>
+											{showPassword ? (
+												<VisibilityOff />
+											) : (
+												<Visibility />
+											)}
 										</AtomIconButton>
 									</InputAdornment>
 								),
@@ -175,29 +174,25 @@ const SignInForm = () => {
 					type="submit"
 					variant="contained"
 					fullWidth
-					sx={{ mt: 3, mb: 2 }}>
+					sx={{ mt: 3, mb: 2 }}
+				>
 					Sign In
 				</AtomButton>
 
 				<Grid container>
-					<Grid
-						item
-						xs>
-						<Link
-							href="#"
-							variant="body2">
+					<Grid item xs>
+						<Link href="#" variant="body2">
 							Forgot password?
 						</Link>
 					</Grid>
 					<Grid item>
-						<Link
-							href="#"
-							variant="body2">
+						<Link href="#" variant="body2">
 							Don't have an account? Sign Up
 						</Link>
 					</Grid>
 				</Grid>
 			</Box>
+			{/* </form> */}
 		</Box>
 	);
 };

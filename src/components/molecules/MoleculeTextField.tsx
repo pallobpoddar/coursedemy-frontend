@@ -14,7 +14,7 @@ type Props = {
 	autoComplete?: string;
 	autoFocus?: boolean;
 	InputProps?: object;
-	field:
+	field?:
 		| ControllerRenderProps<
 				{
 					email: string;
@@ -35,7 +35,9 @@ type Props = {
 };
 
 const MoleculeTextField = (props: Props) => {
-	return <TextField {...props} />;
+	const { field, ...textFieldProps } = props;
+
+	return <TextField {...textFieldProps} {...field} />;
 };
 
 export default MoleculeTextField;
