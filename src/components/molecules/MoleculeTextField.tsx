@@ -1,6 +1,7 @@
 import TextField from "@mui/material/TextField";
 import { SxProps } from "@mui/material";
 import React from "react";
+import { ControllerRenderProps } from "react-hook-form";
 
 type Props = {
 	type?: string;
@@ -10,10 +11,26 @@ type Props = {
 	fullWidth?: boolean;
 	id: string;
 	label: React.ReactNode;
-	name: string;
 	autoComplete?: string;
 	autoFocus?: boolean;
 	InputProps?: object;
+	field:
+		| ControllerRenderProps<
+				{
+					email: string;
+					password: string;
+				},
+				"email"
+		  >
+		| ControllerRenderProps<
+				{
+					email: string;
+					password: string;
+				},
+				"password"
+		  >;
+	error?: boolean;
+	helperText?: React.ReactNode;
 	sx?: SxProps;
 };
 
