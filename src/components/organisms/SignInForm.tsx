@@ -37,24 +37,22 @@ const SignInForm = () => {
 		console.log(formData);
 	};
 
-	useEffect(() => {}, [errors]);
-
 	return (
 		<Box
 			sx={{
 				display: "flex",
 				flexDirection: "column",
 				alignItems: "center",
-			}}
-		>
-			<AtomTypography component="h1" variant="h4">
+			}}>
+			<AtomTypography
+				component="h1"
+				variant="h4">
 				Sign in
 			</AtomTypography>
 			<Box
 				component="form"
 				sx={{ mt: 1 }}
-				onSubmit={handleSubmit(handlerOnSubmit)}
-			>
+				onSubmit={handleSubmit(handlerOnSubmit)}>
 				<Controller
 					name="email"
 					control={control}
@@ -70,31 +68,18 @@ const SignInForm = () => {
 							required
 							fullWidth
 							id="email"
-							label="Email"
+							label={errors.email ? errors.email.message : "Email"}
 							autoComplete="email"
 							autoFocus
 							field={field}
-							// error={errors.email ? true : false}
-							// helperText={errors.email ? errors.email.message : ""}
+							error={errors.email ? true : false}
 						/>
 					)}
 				/>
-				{errors.email && <p>{errors.email.message}</p>}
-				{/* <MoleculeTextField
-					margin="normal"
-					required
-					fullWidth
-					id="email"
-					label="Email"
-					name="email"
-					autoComplete="email"
-					autoFocus
-				/> */}
 				<Controller
 					name="password"
 					control={control}
 					rules={{
-						required: "Password is required",
 						maxLength: {
 							value: 20,
 							message: "Password is not valid",
@@ -107,7 +92,7 @@ const SignInForm = () => {
 							required
 							fullWidth
 							id="password"
-							label="Password"
+							label={errors.password ? errors.password.message : "Password"}
 							autoComplete="current-password"
 							InputProps={{
 								endAdornment: (
@@ -115,51 +100,20 @@ const SignInForm = () => {
 										<AtomIconButton
 											aria-label="toggle password visibility"
 											edge="end"
-											onClick={() =>
-												setShowPassword(!showPassword)
-											}
-											onMouseDown={(
-												e: React.MouseEvent<HTMLButtonElement>
-											) => e.preventDefault()}
-										>
-											{showPassword ? (
-												<VisibilityOff />
-											) : (
-												<Visibility />
-											)}
+											onClick={() => setShowPassword(!showPassword)}
+											onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) =>
+												e.preventDefault()
+											}>
+											{showPassword ? <VisibilityOff /> : <Visibility />}
 										</AtomIconButton>
 									</InputAdornment>
 								),
 							}}
 							field={field}
+							error={errors.password ? true : false}
 						/>
 					)}
 				/>
-				{/* <MoleculeTextField
-					type={showPassword ? "text" : "password"}
-					margin="normal"
-					required
-					fullWidth
-					id="password"
-					label="Password"
-					name="password"
-					autoComplete="current-password"
-					InputProps={{
-						endAdornment: (
-							<InputAdornment position="end">
-								<AtomIconButton
-									aria-label="toggle password visibility"
-									edge="end"
-									onClick={() => setShowPassword(!showPassword)}
-									onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) =>
-										e.preventDefault()
-									}>
-									{showPassword ? <VisibilityOff /> : <Visibility />}
-								</AtomIconButton>
-							</InputAdornment>
-						),
-					}}
-				/> */}
 				<MoleculeFormControlLabel
 					control={
 						<AtomCheckbox
@@ -174,25 +128,29 @@ const SignInForm = () => {
 					type="submit"
 					variant="contained"
 					fullWidth
-					sx={{ mt: 3, mb: 2 }}
-				>
+					sx={{ mt: 3, mb: 2 }}>
 					Sign In
 				</AtomButton>
 
 				<Grid container>
-					<Grid item xs>
-						<Link href="#" variant="body2">
+					<Grid
+						item
+						xs>
+						<Link
+							href="#"
+							variant="body2">
 							Forgot password?
 						</Link>
 					</Grid>
 					<Grid item>
-						<Link href="#" variant="body2">
-							Don't have an account? Sign Up
+						<Link
+							href="#"
+							variant="body2">
+							Don't have an account? Sign up
 						</Link>
 					</Grid>
 				</Grid>
 			</Box>
-			{/* </form> */}
 		</Box>
 	);
 };
