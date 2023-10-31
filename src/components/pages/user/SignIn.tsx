@@ -12,9 +12,10 @@ const SignIn = () => {
 					display: "flex",
 					alignItems: "center",
 					minHeight: "100vh",
-				}}
-			>
-				<Container component="main" maxWidth="xs">
+				}}>
+				<Container
+					component="main"
+					maxWidth="xs">
 					<SignInForm />
 				</Container>
 			</Box>
