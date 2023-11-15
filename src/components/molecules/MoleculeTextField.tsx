@@ -17,6 +17,15 @@ type Props = {
 	field?:
 		| ControllerRenderProps<
 				{
+					name: string;
+					email: string;
+					password: string;
+				},
+				"name"
+		  >
+		| ControllerRenderProps<
+				{
+					name: string;
 					email: string;
 					password: string;
 				},
@@ -24,6 +33,7 @@ type Props = {
 		  >
 		| ControllerRenderProps<
 				{
+					name: string;
 					email: string;
 					password: string;
 				},
