@@ -20,6 +20,8 @@ type Props = {
 		| "subtitle1"
 		| "subtitle2";
 	children: React.ReactNode;
+	gutterBottom?: boolean;
+	color?: any;
 	sx?: SxProps;
 };
 

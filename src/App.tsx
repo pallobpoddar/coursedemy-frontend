@@ -3,10 +3,12 @@ import "./App.css";
 import SignIn from "./components/pages/user/SignIn";
 import SignUp from "./components/pages/user/SignUp";
 import HomePage from "./components/pages/user/HomePage";
+import { CssBaseline } from "@mui/material";
 
 const App = () => {
 	return (
 		<>
+			<CssBaseline />
 			<Router>
 				<Routes>
 					<Route
