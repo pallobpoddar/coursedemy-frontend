@@ -7,6 +7,8 @@ type Props = {
 	variant?: "contained" | "outlined" | "text";
 	fullWidth?: boolean;
 	children: React.ReactNode;
+	color?: any;
+	size?: "small" | "medium" | "large";
 	sx?: SxProps;
 };
 
