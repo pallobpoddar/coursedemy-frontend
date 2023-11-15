@@ -5,7 +5,7 @@ import CourseList from "../../organisms/CourseList";
 
 type Props = {};
 
-const HomePage = (props: Props) => {
+const Home = (props: Props) => {
 	return (
 		<>
 			<Header />
@@ -15,4 +15,4 @@ const HomePage = (props: Props) => {
 	);
 };
 
-export default HomePage;
+export default Home;
