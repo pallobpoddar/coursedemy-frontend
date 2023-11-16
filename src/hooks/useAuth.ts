@@ -17,12 +17,28 @@ const useAuth = () => {
 					"Content-Type": "application/json",
 				},
 			});
-			console.log(response.data);
 			return response.data;
 		} catch (error) {
 			return { error: error };
 		}}
-    return {signup};
+
+	const verifyEmail = async (formData: {
+		token: string | undefined;
+		id: string | undefined;
+	}) => {
+		try {
+			const response = await authInstance.post("/verify-email", formData, {
+				headers: {
+					"Content-Type": "application/json",
+				}
+			})
+			return response.data;
+		} catch(error) {
+			return {error: error};
+		}
+	}
+
+    return {signup, verifyEmail};
 };
 
 export default useAuth;
