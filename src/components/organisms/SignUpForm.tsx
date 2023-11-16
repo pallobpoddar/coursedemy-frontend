@@ -14,9 +14,21 @@ import useAuth from "../../hooks/useAuth";
 import Alert from "@mui/material/Alert";
 
 const SignUpForm = () => {
+	type UserData = {
+		success: boolean;
+		message: string;
+		data?: Object;
+		errors?: string[];
+	};
+
 	const [showPassword, setShowPassword] = useState(false);
-	const [showError, setShowError] = useState(false);
-	const [userData, setUserData] = useState("");
+	const [showAlert, setShowAlert] = useState(false);
+	const [userData, setUserData] = useState<UserData>({
+		success: false,
+		message: "",
+		data: {},
+		errors: [],
+	});
 
 	const {
 		handleSubmit,
@@ -34,16 +46,25 @@ const SignUpForm = () => {
 
 	const { signup } = useAuth();
 
-	const handlerOnSubmit = (data: any) => {
+	const pathArray = window.location.pathname.split("/");
+	const role = pathArray[1];
+
+	const handlerOnSubmit = async (data: any) => {
 		const formData = {
 			name: getValues("name"),
 			email: getValues("email"),
 			password: getValues("password"),
+			role: role,
 		};
-		const userData = signup(formData);
-		setShowError(true);
-		setUserData(userData);
-		console.log(userData);
+		const result = await signup(formData);
+		if (result.error) {
+			console.log("Error signing up: ", result.error.response.data);
+			setUserData(result.error.response.data);
+			setShowAlert(true);
+		} else {
+			setUserData(result);
+			setShowAlert(true);
+		}
 	};
 
 	return (
@@ -52,21 +73,25 @@ const SignUpForm = () => {
 				display: "flex",
 				flexDirection: "column",
 				alignItems: "center",
-			}}
-		>
-			<AtomTypography component="h1" variant="h4">
+			}}>
+			<AtomTypography
+				component="h1"
+				variant="h4">
 				Sign Up
 			</AtomTypography>
-			{showError === true && (
-				<Alert variant="filled" severity="error">
-					This is an error alert — check it out!
+
+			{showAlert && (
+				<Alert
+					variant="filled"
+					severity={userData.success === true ? "success" : "error"}
+					sx={{ mt: 1, width: "100%" }}>
+					{userData.message}
 				</Alert>
 			)}
 			<Box
 				component="form"
 				sx={{ mt: 1 }}
-				onSubmit={handleSubmit(handlerOnSubmit)}
-			>
+				onSubmit={handleSubmit(handlerOnSubmit)}>
 				<Controller
 					name="name"
 					control={control}
@@ -82,9 +107,7 @@ const SignUpForm = () => {
 							required
 							fullWidth
 							id="name"
-							label={
-								errors.name ? errors.name.message : "Full Name"
-							}
+							label={errors.name ? errors.name.message : "Full Name"}
 							autoComplete="name"
 							autoFocus
 							field={field}
@@ -107,9 +130,7 @@ const SignUpForm = () => {
 							required
 							fullWidth
 							id="email"
-							label={
-								errors.email ? errors.email.message : "Email"
-							}
+							label={errors.email ? errors.email.message : "Email"}
 							autoComplete="email"
 							field={field}
 							error={errors.email ? true : false}
@@ -136,11 +157,7 @@ const SignUpForm = () => {
 							required
 							fullWidth
 							id="password"
-							label={
-								errors.password
-									? errors.password.message
-									: "Password"
-							}
+							label={errors.password ? errors.password.message : "Password"}
 							autoComplete="current-password"
 							InputProps={{
 								endAdornment: (
@@ -148,18 +165,11 @@ const SignUpForm = () => {
 										<AtomIconButton
 											aria-label="toggle password visibility"
 											edge="end"
-											onClick={() =>
-												setShowPassword(!showPassword)
-											}
-											onMouseDown={(
-												e: React.MouseEvent<HTMLButtonElement>
-											) => e.preventDefault()}
-										>
-											{showPassword ? (
-												<VisibilityOff />
-											) : (
-												<Visibility />
-											)}
+											onClick={() => setShowPassword(!showPassword)}
+											onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) =>
+												e.preventDefault()
+											}>
+											{showPassword ? <VisibilityOff /> : <Visibility />}
 										</AtomIconButton>
 									</InputAdornment>
 								),
@@ -174,13 +184,16 @@ const SignUpForm = () => {
 					type="submit"
 					variant="contained"
 					fullWidth
-					sx={{ mt: 3, mb: 2 }}
-				>
+					sx={{ mt: 3, mb: 2 }}>
 					Sign Up
 				</AtomButton>
-				<Grid container justifyContent="center">
+				<Grid
+					container
+					justifyContent="center">
 					<Grid item>
-						<Link href="#" variant="body2">
+						<Link
+							href="#"
+							variant="body2">
 							Already have an account? Sign in
 						</Link>
 					</Grid>
