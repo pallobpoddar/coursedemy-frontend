@@ -38,6 +38,12 @@ type Props = {
 					password: string;
 				},
 				"password"
+		  >
+		| ControllerRenderProps<
+				{
+					confirmPassword: string;
+				},
+				"confirmPassword"
 		  >;
 	error?: boolean;
 	helperText?: React.ReactNode;
@@ -47,7 +53,12 @@ type Props = {
 const MoleculeTextField = (props: Props) => {
 	const { field, ...textFieldProps } = props;
 
-	return <TextField {...textFieldProps} {...field} />;
+	return (
+		<TextField
+			{...textFieldProps}
+			{...field}
+		/>
+	);
 };
 
 export default MoleculeTextField;

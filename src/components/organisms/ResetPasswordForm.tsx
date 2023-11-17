@@ -1,21 +1,14 @@
-import React, { useEffect, useState } from "react";
-import Grid from "@mui/material/Grid";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
-import InputAdornment from "@mui/material/InputAdornment";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useForm, Controller } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import AtomButton from "../atoms/AtomButton";
 import AtomTypography from "../atoms/AtomTypography";
-import AtomIconButton from "../atoms/AtomIconButton";
 import MoleculeTextField from "../molecules/MoleculeTextField";
 import useAuth from "../../hooks/useAuth";
 import AtomAlert from "../atoms/AtomAlert";
-import { addUserInfo } from "../../redux/slices/userSlice";
 
-const SignInForm = () => {
+const ResetPasswordForm = () => {
 	type UserData = {
 		success: boolean;
 		message: string;
@@ -23,9 +16,7 @@ const SignInForm = () => {
 		errors?: string[];
 	};
 
-	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const [showPassword, setShowPassword] = useState(false);
 	const [userData, setUserData] = useState<UserData>({
 		success: false,
 		message: "",
@@ -38,23 +29,28 @@ const SignInForm = () => {
 		control,
 		formState: { errors },
 		getValues,
+		watch,
 	} = useForm({
 		mode: "onChange",
 		defaultValues: {
 			email: "",
 			password: "",
+			confirmPassword: "",
 		},
 	});
 
-	const { signin } = useAuth();
+	const { resetPassword } = useAuth();
+	const { token, id } = useParams();
 
 	const handlerOnSubmit = async (data: any) => {
 		const formData = {
-			email: getValues("email"),
+			token: token,
+			id: id,
 			password: getValues("password"),
+			confirmPassword: getValues("confirmPassword"),
 		};
 
-		const result = await signin(formData);
+		const result = await resetPassword(formData);
 		if (result.error) {
 			setUserData(result.error.response.data);
 		} else {
@@ -73,7 +69,7 @@ const SignInForm = () => {
 			<AtomTypography
 				component="h1"
 				variant="h4">
-				Sign in
+				Reset Password
 			</AtomTypography>
 
 			{userData.message !== "" && (
@@ -89,29 +85,6 @@ const SignInForm = () => {
 				sx={{ mt: 1 }}
 				onSubmit={handleSubmit(handlerOnSubmit)}>
 				<Controller
-					name="email"
-					control={control}
-					rules={{
-						maxLength: {
-							value: 320,
-							message: "Invalid email",
-						},
-					}}
-					render={({ field }) => (
-						<MoleculeTextField
-							margin="normal"
-							required
-							fullWidth
-							id="email"
-							label={errors.email ? errors.email.message : "Email"}
-							autoComplete="email"
-							autoFocus
-							field={field}
-							error={errors.email ? true : false}
-						/>
-					)}
-				/>
-				<Controller
 					name="password"
 					control={control}
 					rules={{
@@ -126,30 +99,49 @@ const SignInForm = () => {
 					}}
 					render={({ field }) => (
 						<MoleculeTextField
-							type={showPassword ? "text" : "password"}
+							type="password"
 							margin="normal"
 							required
 							fullWidth
 							id="password"
 							label={errors.password ? errors.password.message : "Password"}
 							autoComplete="current-password"
-							InputProps={{
-								endAdornment: (
-									<InputAdornment position="end">
-										<AtomIconButton
-											aria-label="toggle password visibility"
-											edge="end"
-											onClick={() => setShowPassword(!showPassword)}
-											onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) =>
-												e.preventDefault()
-											}>
-											{showPassword ? <VisibilityOff /> : <Visibility />}
-										</AtomIconButton>
-									</InputAdornment>
-								),
-							}}
 							field={field}
 							error={errors.password ? true : false}
+						/>
+					)}
+				/>
+
+				<Controller
+					name="confirmPassword"
+					control={control}
+					rules={{
+						minLength: {
+							value: 8,
+							message: "Invalid password",
+						},
+						maxLength: {
+							value: 20,
+							message: "Character limit exceeded",
+						},
+						validate: (value) =>
+							value === watch("password") || "Passwords do not match",
+					}}
+					render={({ field }) => (
+						<MoleculeTextField
+							type="password"
+							margin="normal"
+							required
+							fullWidth
+							id="confirmPassword"
+							label={
+								errors.confirmPassword
+									? errors.confirmPassword.message
+									: "Confirm Password"
+							}
+							autoComplete="current-password"
+							field={field}
+							error={errors.confirmPassword ? true : false}
 						/>
 					)}
 				/>
@@ -159,38 +151,11 @@ const SignInForm = () => {
 					variant="contained"
 					fullWidth
 					sx={{ mt: 3, mb: 2 }}>
-					Sign In
+					Submit
 				</AtomButton>
-
-				<Grid container>
-					<Grid
-						item
-						xs>
-						<Link
-							to="/user/forgot-password"
-							style={{ color: "#1976d2" }}>
-							<AtomTypography
-								component="p"
-								variant="body2">
-								Forgot password?
-							</AtomTypography>
-						</Link>
-					</Grid>
-					<Grid item>
-						<Link
-							to="/learner/signup"
-							style={{ color: "#1976d2" }}>
-							<AtomTypography
-								component="p"
-								variant="body2">
-								Don't have an account? Sign up
-							</AtomTypography>
-						</Link>
-					</Grid>
-				</Grid>
 			</Box>
 		</Box>
 	);
 };
 
-export default SignInForm;
+export default ResetPasswordForm;
