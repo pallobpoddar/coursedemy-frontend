@@ -3,8 +3,9 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import AtomTypography from "../atoms/AtomTypography";
 import AtomButton from "../atoms/AtomButton";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import AtomAlert from "../atoms/AtomAlert";
 
 const VerifyEmailSection = () => {
 	const navigate = useNavigate();
@@ -23,11 +24,11 @@ const VerifyEmailSection = () => {
 		errors: [],
 	});
 
-	const { token, id } = useParams();
 	const { verifyEmail } = useAuth();
+	const { token, id } = useParams();
 
-	const handlerOnSubmit = async (data: any) => {
-		console.log(token, id);
+	const handlerOnSubmit = async (e: any) => {
+		e.preventDefault();
 		const formData = {
 			token: token,
 			id: id,
@@ -37,6 +38,7 @@ const VerifyEmailSection = () => {
 			setUserData(result.error.response.data);
 		} else {
 			setUserData(result);
+			navigate("/");
 		}
 	};
 
@@ -46,9 +48,10 @@ const VerifyEmailSection = () => {
 				display: "flex",
 				alignItems: "center",
 				mt: 5,
-			}}
-		>
-			<Container maxWidth="xs" sx={{ backgroundColor: "white" }}>
+			}}>
+			<Container
+				maxWidth="xs"
+				sx={{ backgroundColor: "white" }}>
 				<Box
 					component="form"
 					sx={{
@@ -56,21 +59,31 @@ const VerifyEmailSection = () => {
 						flexDirection: "column",
 						alignItems: "center",
 					}}
-					onSubmit={handlerOnSubmit}
-				>
-					<AtomTypography component="h1" variant="h4">
+					onSubmit={handlerOnSubmit}>
+					{userData.message !== "" && (
+						<AtomAlert
+							variant="filled"
+							severity="error"
+							sx={{ mb: 2, width: "100%" }}>
+							{userData.message}
+						</AtomAlert>
+					)}
+					<AtomTypography
+						component="h1"
+						variant="h4">
 						Verify your email
 					</AtomTypography>
-					<AtomTypography component="p" sx={{ mt: 2 }}>
-						You're almost ready to start enjoying Skillbase. Simply
-						click the big blue button to verify your email address.
+					<AtomTypography
+						component="p"
+						sx={{ mt: 2 }}>
+						You're almost ready to start enjoying Skillbase. Simply click the
+						big blue button to verify your email address.
 					</AtomTypography>
 					<AtomButton
 						type="submit"
 						variant="contained"
 						size="large"
-						sx={{ mt: 2 }}
-					>
+						sx={{ mt: 2 }}>
 						Verify
 					</AtomButton>
 				</Box>
