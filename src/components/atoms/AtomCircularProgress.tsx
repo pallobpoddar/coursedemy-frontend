@@ -1,8 +1,7 @@
 import CircularProgress from "@mui/material/CircularProgress";
-import React from "react";
 
 type Props = {
-	color:
+	color?:
 		| "inherit"
 		| "primary"
 		| "secondary"
@@ -10,6 +9,7 @@ type Props = {
 		| "info"
 		| "success"
 		| "warning";
+	size?: number | string;
 };
 
 const AtomCircularProgress = (props: Props) => {

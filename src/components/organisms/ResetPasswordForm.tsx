@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -7,6 +7,9 @@ import AtomTypography from "../atoms/AtomTypography";
 import MoleculeTextField from "../molecules/MoleculeTextField";
 import useAuth from "../../hooks/useAuth";
 import AtomAlert from "../atoms/AtomAlert";
+import AtomCircularProgress from "../atoms/AtomCircularProgress";
+import { useDispatch } from "react-redux";
+import { saveSignin } from "../../redux/slices/authSlice";
 
 const ResetPasswordForm = () => {
 	type UserData = {
@@ -17,6 +20,9 @@ const ResetPasswordForm = () => {
 	};
 
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
+	const [showCircularProgress, setShowCircularProgress] = useState(false);
 	const [userData, setUserData] = useState<UserData>({
 		success: false,
 		message: "",
@@ -42,7 +48,8 @@ const ResetPasswordForm = () => {
 	const { resetPassword } = useAuth();
 	const { token, id } = useParams();
 
-	const handlerOnSubmit = async (data: any) => {
+	const handlerOnSubmit = async () => {
+		setShowCircularProgress(true);
 		const formData = {
 			token: token,
 			id: id,
@@ -52,9 +59,12 @@ const ResetPasswordForm = () => {
 
 		const result = await resetPassword(formData);
 		if (result.error) {
+			setShowCircularProgress(false);
 			setUserData(result.error.response.data);
 		} else {
+			setShowCircularProgress(false);
 			setUserData(result);
+			dispatch(saveSignin(result));
 			navigate("/");
 		}
 	};
@@ -65,10 +75,9 @@ const ResetPasswordForm = () => {
 				display: "flex",
 				flexDirection: "column",
 				alignItems: "center",
-			}}>
-			<AtomTypography
-				component="h1"
-				variant="h4">
+			}}
+		>
+			<AtomTypography component="h1" variant="h4">
 				Reset Password
 			</AtomTypography>
 
@@ -76,14 +85,16 @@ const ResetPasswordForm = () => {
 				<AtomAlert
 					variant="filled"
 					severity="error"
-					sx={{ mt: 1, width: "100%" }}>
+					sx={{ mt: 1, width: "100%" }}
+				>
 					{userData.message}
 				</AtomAlert>
 			)}
 			<Box
 				component="form"
 				sx={{ mt: 1 }}
-				onSubmit={handleSubmit(handlerOnSubmit)}>
+				onSubmit={handleSubmit(handlerOnSubmit)}
+			>
 				<Controller
 					name="password"
 					control={control}
@@ -104,7 +115,11 @@ const ResetPasswordForm = () => {
 							required
 							fullWidth
 							id="password"
-							label={errors.password ? errors.password.message : "Password"}
+							label={
+								errors.password
+									? errors.password.message
+									: "Password"
+							}
 							autoComplete="current-password"
 							field={field}
 							error={errors.password ? true : false}
@@ -125,7 +140,8 @@ const ResetPasswordForm = () => {
 							message: "Character limit exceeded",
 						},
 						validate: (value) =>
-							value === watch("password") || "Passwords do not match",
+							value === watch("password") ||
+							"Passwords do not match",
 					}}
 					render={({ field }) => (
 						<MoleculeTextField
@@ -150,8 +166,13 @@ const ResetPasswordForm = () => {
 					type="submit"
 					variant="contained"
 					fullWidth
-					sx={{ mt: 3, mb: 2 }}>
-					Submit
+					sx={{ mt: 3, mb: 2 }}
+				>
+					{showCircularProgress ? (
+						<AtomCircularProgress color="inherit" size={25} />
+					) : (
+						<>Submit</>
+					)}
 				</AtomButton>
 			</Box>
 		</Box>

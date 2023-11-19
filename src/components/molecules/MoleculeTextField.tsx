@@ -1,7 +1,7 @@
-import TextField from "@mui/material/TextField";
-import { SxProps } from "@mui/material";
 import React from "react";
 import { ControllerRenderProps } from "react-hook-form";
+import TextField from "@mui/material/TextField";
+import { SxProps } from "@mui/material";
 
 type Props = {
 	type?: string;
@@ -53,12 +53,7 @@ type Props = {
 const MoleculeTextField = (props: Props) => {
 	const { field, ...textFieldProps } = props;
 
-	return (
-		<TextField
-			{...textFieldProps}
-			{...field}
-		/>
-	);
+	return <TextField {...textFieldProps} {...field} />;
 };
 
 export default MoleculeTextField;

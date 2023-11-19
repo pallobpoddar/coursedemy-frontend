@@ -1,12 +1,12 @@
-import React from "react";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import AtomTypography from "../atoms/AtomTypography";
+// import React from "react";
+// import Paper from "@mui/material/Paper";
+// import Box from "@mui/material/Box";
+// import AtomTypography from "../atoms/AtomTypography";
 
 const Banner = () => {
 	return (
 		<>
-			<Paper
+			{/* <Paper
 				style={{
 					backgroundImage:
 						'url("https://pallob-inception-bucket.s3.eu-west-3.amazonaws.com/final-project/images/header-photo-home-2-optimized-48.png")',
@@ -38,7 +38,7 @@ const Banner = () => {
 						Unlock Your Potential, One Course at a Time
 					</AtomTypography>
 				</Box>
-			</Paper>
+			</Paper> */}
 		</>
 	);
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import AtomTypography from "../atoms/AtomTypography";
@@ -6,10 +6,11 @@ import AtomButton from "../atoms/AtomButton";
 import { useParams, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import AtomAlert from "../atoms/AtomAlert";
+import AtomCircularProgress from "../atoms/AtomCircularProgress";
+import { useDispatch } from "react-redux";
+import { saveSignin } from "../../redux/slices/authSlice";
 
 const VerifyEmailSection = () => {
-	const navigate = useNavigate();
-
 	type UserData = {
 		success: boolean;
 		message: string;
@@ -17,6 +18,10 @@ const VerifyEmailSection = () => {
 		errors?: string[];
 	};
 
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	const [showCircularProgress, setShowCircularProgress] = useState(false);
 	const [userData, setUserData] = useState<UserData>({
 		success: false,
 		message: "",
@@ -29,15 +34,19 @@ const VerifyEmailSection = () => {
 
 	const handlerOnSubmit = async (e: any) => {
 		e.preventDefault();
+		setShowCircularProgress(true);
 		const formData = {
 			token: token,
 			id: id,
 		};
 		const result = await verifyEmail(formData);
 		if (result.error) {
+			setShowCircularProgress(false);
 			setUserData(result.error.response.data);
 		} else {
+			setShowCircularProgress(false);
 			setUserData(result);
+			dispatch(saveSignin(result));
 			navigate("/");
 		}
 	};
@@ -46,12 +55,11 @@ const VerifyEmailSection = () => {
 		<Box
 			sx={{
 				display: "flex",
+				flexDirection: "column",
 				alignItems: "center",
-				mt: 5,
-			}}>
-			<Container
-				maxWidth="xs"
-				sx={{ backgroundColor: "white" }}>
+			}}
+		>
+			<Container maxWidth="xs" sx={{ backgroundColor: "white" }}>
 				<Box
 					component="form"
 					sx={{
@@ -59,32 +67,36 @@ const VerifyEmailSection = () => {
 						flexDirection: "column",
 						alignItems: "center",
 					}}
-					onSubmit={handlerOnSubmit}>
+					onSubmit={handlerOnSubmit}
+				>
 					{userData.message !== "" && (
 						<AtomAlert
 							variant="filled"
 							severity="error"
-							sx={{ mb: 2, width: "100%" }}>
+							sx={{ mb: 2, width: "100%" }}
+						>
 							{userData.message}
 						</AtomAlert>
 					)}
-					<AtomTypography
-						component="h1"
-						variant="h4">
+					<AtomTypography component="h1" variant="h4">
 						Verify your email
 					</AtomTypography>
-					<AtomTypography
-						component="p"
-						sx={{ mt: 2 }}>
-						You're almost ready to start enjoying Skillbase. Simply click the
-						big blue button to verify your email address.
+					<AtomTypography component="p" sx={{ mt: 2 }}>
+						You're almost ready to start enjoying Coursedemy. Simply
+						click the button to verify your email.
 					</AtomTypography>
 					<AtomButton
 						type="submit"
 						variant="contained"
 						size="large"
-						sx={{ mt: 2 }}>
-						Verify
+						fullWidth
+						sx={{ mt: 2 }}
+					>
+						{showCircularProgress === true ? (
+							<AtomCircularProgress color="inherit" size={25} />
+						) : (
+							<>Verify</>
+						)}
 					</AtomButton>
 				</Box>
 			</Container>

@@ -1,17 +1,6 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import authInstance from "../utils/authInstance";
-import { addUserInfo } from "../redux/slices/userSlice";
-import { useDispatch } from "react-redux";
 
 const useAuth = () => {
-	const [reduxData, setReduxData] = useState({});
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		dispatch(addUserInfo(reduxData));
-	}, [reduxData]);
-
 	const signup = async (formData: {
 		name: string;
 		email: string;
@@ -37,7 +26,6 @@ const useAuth = () => {
 					"Content-Type": "application/json",
 				},
 			});
-			setReduxData(response.data);
 			return response.data;
 		} catch (error) {
 			return { error: error };

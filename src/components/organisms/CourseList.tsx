@@ -1,5 +1,3 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -15,30 +13,20 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const CourseList = () => {
 	return (
 		<>
-			<AtomTypography
-				component="h2"
-				variant="h5">
+			<AtomTypography component="h2" variant="h5">
 				Recommended for you
 			</AtomTypography>
-			<Container
-				sx={{ py: 8 }}
-				maxWidth="md">
-				<Grid
-					container
-					spacing={4}>
+			<Container sx={{ py: 8 }} maxWidth="md">
+				<Grid container spacing={4}>
 					{cards.map((card) => (
-						<Grid
-							item
-							key={card}
-							xs={12}
-							sm={6}
-							md={4}>
+						<Grid item key={card} xs={12} sm={6} md={4}>
 							<Card
 								sx={{
 									height: "100%",
 									display: "flex",
 									flexDirection: "column",
-								}}>
+								}}
+							>
 								<CardMedia
 									component="div"
 									sx={{
@@ -50,12 +38,13 @@ const CourseList = () => {
 									<AtomTypography
 										gutterBottom
 										variant="h5"
-										component="h2">
+										component="h2"
+									>
 										Heading
 									</AtomTypography>
 									<Typography>
-										This is a media card. You can use this section to describe
-										the content.
+										This is a media card. You can use this
+										section to describe the content.
 									</Typography>
 								</CardContent>
 								<CardActions>
