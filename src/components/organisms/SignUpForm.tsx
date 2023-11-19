@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Backdrop from "@mui/material/Backdrop";
 import InputAdornment from "@mui/material/InputAdornment";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
@@ -23,7 +22,7 @@ const SignUpForm = () => {
 		errors?: string[];
 	};
 
-	const [showBackdrop, setShowBackdrop] = useState(false);
+	const [showCircularProgress, setShowCircularProgress] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 	const [userData, setUserData] = useState<UserData>({
 		success: false,
@@ -51,8 +50,8 @@ const SignUpForm = () => {
 	const pathArray = window.location.pathname.split("/");
 	const role = pathArray[1];
 
-	const handlerOnSubmit = async (data: any) => {
-		setShowBackdrop(true);
+	const handlerOnSubmit = async () => {
+		setShowCircularProgress(true);
 		const formData = {
 			name: getValues("name"),
 			email: getValues("email"),
@@ -61,10 +60,10 @@ const SignUpForm = () => {
 		};
 		const result = await signup(formData);
 		if (result.error) {
-			setShowBackdrop(false);
+			setShowCircularProgress(false);
 			setUserData(result.error.response.data);
 		} else {
-			setShowBackdrop(false);
+			setShowCircularProgress(false);
 			setUserData(result);
 		}
 	};
@@ -75,15 +74,9 @@ const SignUpForm = () => {
 				display: "flex",
 				flexDirection: "column",
 				alignItems: "center",
-			}}>
-			<Backdrop
-				sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-				open={showBackdrop}>
-				<AtomCircularProgress color="inherit" />
-			</Backdrop>
-			<AtomTypography
-				component="h1"
-				variant="h4">
+			}}
+		>
+			<AtomTypography component="h1" variant="h4">
 				Sign Up
 			</AtomTypography>
 
@@ -91,14 +84,16 @@ const SignUpForm = () => {
 				<AtomAlert
 					variant="filled"
 					severity={userData.success === true ? "success" : "error"}
-					sx={{ mt: 1, width: "100%" }}>
+					sx={{ mt: 1, width: "100%" }}
+				>
 					{userData.message}
 				</AtomAlert>
 			)}
 			<Box
 				component="form"
 				sx={{ mt: 1 }}
-				onSubmit={handleSubmit(handlerOnSubmit)}>
+				onSubmit={handleSubmit(handlerOnSubmit)}
+			>
 				<Controller
 					name="name"
 					control={control}
@@ -114,7 +109,9 @@ const SignUpForm = () => {
 							required
 							fullWidth
 							id="name"
-							label={errors.name ? errors.name.message : "Full Name"}
+							label={
+								errors.name ? errors.name.message : "Full Name"
+							}
 							autoComplete="name"
 							autoFocus
 							field={field}
@@ -137,7 +134,9 @@ const SignUpForm = () => {
 							required
 							fullWidth
 							id="email"
-							label={errors.email ? errors.email.message : "Email"}
+							label={
+								errors.email ? errors.email.message : "Email"
+							}
 							autoComplete="email"
 							field={field}
 							error={errors.email ? true : false}
@@ -164,7 +163,11 @@ const SignUpForm = () => {
 							required
 							fullWidth
 							id="password"
-							label={errors.password ? errors.password.message : "Password"}
+							label={
+								errors.password
+									? errors.password.message
+									: "Password"
+							}
 							autoComplete="current-password"
 							InputProps={{
 								endAdornment: (
@@ -172,11 +175,18 @@ const SignUpForm = () => {
 										<AtomIconButton
 											aria-label="toggle password visibility"
 											edge="end"
-											onClick={() => setShowPassword(!showPassword)}
-											onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) =>
-												e.preventDefault()
-											}>
-											{showPassword ? <VisibilityOff /> : <Visibility />}
+											onClick={() =>
+												setShowPassword(!showPassword)
+											}
+											onMouseDown={(
+												e: React.MouseEvent<HTMLButtonElement>
+											) => e.preventDefault()}
+										>
+											{showPassword ? (
+												<VisibilityOff />
+											) : (
+												<Visibility />
+											)}
 										</AtomIconButton>
 									</InputAdornment>
 								),
@@ -191,19 +201,18 @@ const SignUpForm = () => {
 					type="submit"
 					variant="contained"
 					fullWidth
-					sx={{ mt: 3, mb: 2 }}>
-					Sign Up
+					sx={{ mt: 3, mb: 2 }}
+				>
+					{showCircularProgress === true ? (
+						<AtomCircularProgress color="inherit" size={25} />
+					) : (
+						<>Sign up</>
+					)}
 				</AtomButton>
-				<Grid
-					container
-					justifyContent="center">
+				<Grid container justifyContent="center">
 					<Grid item>
-						<Link
-							to="/user/signin"
-							style={{ color: "#1976d2" }}>
-							<AtomTypography
-								component="p"
-								variant="body2">
+						<Link to="/user/signin" style={{ color: "#1976d2" }}>
+							<AtomTypography component="p" variant="body2">
 								{" "}
 								Already have an account? Sign in
 							</AtomTypography>

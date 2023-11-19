@@ -1,4 +1,3 @@
-import React from "react";
 import { CssBaseline } from "@mui/material";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SignIn from "./components/pages/user/SignIn";
@@ -14,18 +13,10 @@ const App = () => {
 			<CssBaseline />
 			<Router>
 				<Routes>
-					<Route
-						path="/"
-						element={<Home />}
-					/>
-					<Route
-						path="/learner/signup"
-						element={<SignUp />}
-					/>
-					<Route
-						path="/user/signin"
-						element={<SignIn />}
-					/>
+					<Route path="/" element={<Home />} />
+					<Route path="/learner/signup" element={<SignUp />} />
+					<Route path="/instructor/signup" element={<SignUp />} />
+					<Route path="/user/signin" element={<SignIn />} />
 					<Route
 						path="/user/verify-email/:token/:id"
 						element={<VerifyEmail />}

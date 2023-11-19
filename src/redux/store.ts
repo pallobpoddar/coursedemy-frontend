@@ -1,10 +1,30 @@
-import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./slices/userSlice";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import authSlice from "./slices/authSlice";
+import { persistReducer, persistStore } from "redux-persist";
+import localStorage from "redux-persist/es/storage";
 
-const store = configureStore({
-	reducer: {
-		user: userReducer,
-	},
+const persistConfig = {
+	key: "root",
+	storage: localStorage,
+	whitelist: ["auth"],
+};
+
+const reducers = combineReducers({
+	auth: authSlice,
 });
 
-export default store;
+const persistedReducer = persistReducer(persistConfig, reducers);
+
+const store = configureStore({
+	reducer: persistedReducer,
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware({
+			serializableCheck: false,
+		}),
+});
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
+const persistor = persistStore(store);
+export { store, persistor };

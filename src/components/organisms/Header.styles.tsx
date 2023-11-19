@@ -3,6 +3,7 @@ import InputBase from "@mui/material/InputBase";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
+	border: "1px solid #5c5c5fde",
 	borderRadius: theme.shape.borderRadius,
 	backgroundColor: alpha(theme.palette.common.white, 0.15),
 	"&:hover": {
@@ -28,7 +29,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-	color: "inherit",
+	color: "primary",
 	"& .MuiInputBase-input": {
 		padding: theme.spacing(1, 1, 1, 0),
 		paddingLeft: `calc(1em + ${theme.spacing(4)})`,

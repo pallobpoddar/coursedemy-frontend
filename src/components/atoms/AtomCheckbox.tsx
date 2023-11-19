@@ -1,6 +1,5 @@
 import Checkbox from "@mui/material/Checkbox";
 import { SxProps } from "@mui/material";
-import React from "react";
 
 type Props = {
 	id: string;

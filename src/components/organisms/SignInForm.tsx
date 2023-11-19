@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -13,7 +13,8 @@ import AtomIconButton from "../atoms/AtomIconButton";
 import MoleculeTextField from "../molecules/MoleculeTextField";
 import useAuth from "../../hooks/useAuth";
 import AtomAlert from "../atoms/AtomAlert";
-import { addUserInfo } from "../../redux/slices/userSlice";
+import { saveSignin } from "../../redux/slices/authSlice";
+import AtomCircularProgress from "../atoms/AtomCircularProgress";
 
 const SignInForm = () => {
 	type UserData = {
@@ -25,6 +26,8 @@ const SignInForm = () => {
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+
+	const [showCircularProgress, setShowCircularProgress] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 	const [userData, setUserData] = useState<UserData>({
 		success: false,
@@ -48,7 +51,8 @@ const SignInForm = () => {
 
 	const { signin } = useAuth();
 
-	const handlerOnSubmit = async (data: any) => {
+	const handlerOnSubmit = async () => {
+		setShowCircularProgress(true);
 		const formData = {
 			email: getValues("email"),
 			password: getValues("password"),
@@ -56,9 +60,12 @@ const SignInForm = () => {
 
 		const result = await signin(formData);
 		if (result.error) {
+			setShowCircularProgress(false);
 			setUserData(result.error.response.data);
 		} else {
+			setShowCircularProgress(false);
 			setUserData(result);
+			dispatch(saveSignin(result.data));
 			navigate("/");
 		}
 	};
@@ -69,10 +76,9 @@ const SignInForm = () => {
 				display: "flex",
 				flexDirection: "column",
 				alignItems: "center",
-			}}>
-			<AtomTypography
-				component="h1"
-				variant="h4">
+			}}
+		>
+			<AtomTypography component="h1" variant="h4">
 				Sign in
 			</AtomTypography>
 
@@ -80,14 +86,16 @@ const SignInForm = () => {
 				<AtomAlert
 					variant="filled"
 					severity="error"
-					sx={{ mt: 1, width: "100%" }}>
+					sx={{ mt: 1, width: "100%" }}
+				>
 					{userData.message}
 				</AtomAlert>
 			)}
 			<Box
 				component="form"
 				sx={{ mt: 1 }}
-				onSubmit={handleSubmit(handlerOnSubmit)}>
+				onSubmit={handleSubmit(handlerOnSubmit)}
+			>
 				<Controller
 					name="email"
 					control={control}
@@ -103,7 +111,9 @@ const SignInForm = () => {
 							required
 							fullWidth
 							id="email"
-							label={errors.email ? errors.email.message : "Email"}
+							label={
+								errors.email ? errors.email.message : "Email"
+							}
 							autoComplete="email"
 							autoFocus
 							field={field}
@@ -131,7 +141,11 @@ const SignInForm = () => {
 							required
 							fullWidth
 							id="password"
-							label={errors.password ? errors.password.message : "Password"}
+							label={
+								errors.password
+									? errors.password.message
+									: "Password"
+							}
 							autoComplete="current-password"
 							InputProps={{
 								endAdornment: (
@@ -139,11 +153,18 @@ const SignInForm = () => {
 										<AtomIconButton
 											aria-label="toggle password visibility"
 											edge="end"
-											onClick={() => setShowPassword(!showPassword)}
-											onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) =>
-												e.preventDefault()
-											}>
-											{showPassword ? <VisibilityOff /> : <Visibility />}
+											onClick={() =>
+												setShowPassword(!showPassword)
+											}
+											onMouseDown={(
+												e: React.MouseEvent<HTMLButtonElement>
+											) => e.preventDefault()}
+										>
+											{showPassword ? (
+												<VisibilityOff />
+											) : (
+												<Visibility />
+											)}
 										</AtomIconButton>
 									</InputAdornment>
 								),
@@ -158,31 +179,29 @@ const SignInForm = () => {
 					type="submit"
 					variant="contained"
 					fullWidth
-					sx={{ mt: 3, mb: 2 }}>
-					Sign In
+					sx={{ mt: 3, mb: 2 }}
+				>
+					{showCircularProgress === true ? (
+						<AtomCircularProgress color="inherit" size={25} />
+					) : (
+						<>Sign In</>
+					)}
 				</AtomButton>
 
 				<Grid container>
-					<Grid
-						item
-						xs>
+					<Grid item xs>
 						<Link
 							to="/user/forgot-password"
-							style={{ color: "#1976d2" }}>
-							<AtomTypography
-								component="p"
-								variant="body2">
+							style={{ color: "#1976d2" }}
+						>
+							<AtomTypography component="p" variant="body2">
 								Forgot password?
 							</AtomTypography>
 						</Link>
 					</Grid>
 					<Grid item>
-						<Link
-							to="/learner/signup"
-							style={{ color: "#1976d2" }}>
-							<AtomTypography
-								component="p"
-								variant="body2">
+						<Link to="/learner/signup" style={{ color: "#1976d2" }}>
+							<AtomTypography component="p" variant="body2">
 								Don't have an account? Sign up
 							</AtomTypography>
 						</Link>
