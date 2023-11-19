@@ -1,1 +1,1 @@
-# e-learning-platform
+# coursedemy-frontend
