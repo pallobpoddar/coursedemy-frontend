@@ -3,6 +3,9 @@ import { SxProps } from "@mui/material";
 import React from "react";
 
 type Props = {
+	onMouseEnter?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+	onMouseLeave?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 	type?: "button" | "submit" | "reset";
 	variant?: "contained" | "outlined" | "text";
 	fullWidth?: boolean;

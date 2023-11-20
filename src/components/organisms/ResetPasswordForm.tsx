@@ -64,7 +64,7 @@ const ResetPasswordForm = () => {
 		} else {
 			setShowCircularProgress(false);
 			setUserData(result);
-			dispatch(saveSignin(result));
+			dispatch(saveSignin(result.data));
 			navigate("/");
 		}
 	};
@@ -75,9 +75,10 @@ const ResetPasswordForm = () => {
 				display: "flex",
 				flexDirection: "column",
 				alignItems: "center",
-			}}
-		>
-			<AtomTypography component="h1" variant="h4">
+			}}>
+			<AtomTypography
+				component="h1"
+				variant="h4">
 				Reset Password
 			</AtomTypography>
 
@@ -85,16 +86,14 @@ const ResetPasswordForm = () => {
 				<AtomAlert
 					variant="filled"
 					severity="error"
-					sx={{ mt: 1, width: "100%" }}
-				>
+					sx={{ mt: 1, width: "100%" }}>
 					{userData.message}
 				</AtomAlert>
 			)}
 			<Box
 				component="form"
 				sx={{ mt: 1 }}
-				onSubmit={handleSubmit(handlerOnSubmit)}
-			>
+				onSubmit={handleSubmit(handlerOnSubmit)}>
 				<Controller
 					name="password"
 					control={control}
@@ -115,11 +114,7 @@ const ResetPasswordForm = () => {
 							required
 							fullWidth
 							id="password"
-							label={
-								errors.password
-									? errors.password.message
-									: "Password"
-							}
+							label={errors.password ? errors.password.message : "Password"}
 							autoComplete="current-password"
 							field={field}
 							error={errors.password ? true : false}
@@ -140,8 +135,7 @@ const ResetPasswordForm = () => {
 							message: "Character limit exceeded",
 						},
 						validate: (value) =>
-							value === watch("password") ||
-							"Passwords do not match",
+							value === watch("password") || "Passwords do not match",
 					}}
 					render={({ field }) => (
 						<MoleculeTextField
@@ -166,10 +160,12 @@ const ResetPasswordForm = () => {
 					type="submit"
 					variant="contained"
 					fullWidth
-					sx={{ mt: 3, mb: 2 }}
-				>
+					sx={{ mt: 3, mb: 2 }}>
 					{showCircularProgress ? (
-						<AtomCircularProgress color="inherit" size={25} />
+						<AtomCircularProgress
+							color="inherit"
+							size={25}
+						/>
 					) : (
 						<>Submit</>
 					)}
