@@ -1,5 +1,11 @@
+import MiniDrawer from "../../organisms/MiniDrawer";
+
 const Dashboard = () => {
-	return <div>Dashboard</div>;
+	return (
+		<>
+			<MiniDrawer />
+		</>
+	);
 };
 
 export default Dashboard;

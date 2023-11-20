@@ -9,6 +9,7 @@ import ResetPassword from "./components/pages/user/ResetPassword";
 import PageNotFound from "./components/pages/user/PageNotFound";
 import UserAuthentication from "./components/pages/user/UserAuthentication";
 import Dashboard from "./components/pages/instructor/Dashboard";
+import InstructorAuthentication from "./components/pages/instructor/InstructorAuthentication";
 
 const App = () => {
 	return (
@@ -16,18 +17,15 @@ const App = () => {
 			<CssBaseline />
 			<Router>
 				<Routes>
-					<Route
-						path="/"
-						element={<Home />}
-					/>
+					<Route path="/" element={<Home />} />
 					<Route element={<UserAuthentication />}>
+						<Route path="/user/signup" element={<SignUp />} />
+						<Route path="/user/signin" element={<SignIn />} />
+					</Route>
+					<Route element={<InstructorAuthentication />}>
 						<Route
-							path="/user/signup"
-							element={<SignUp />}
-						/>
-						<Route
-							path="/user/signin"
-							element={<SignIn />}
+							path="/instructor-dashboard"
+							element={<Dashboard />}
 						/>
 					</Route>
 					<Route
@@ -46,10 +44,7 @@ const App = () => {
 						path="/instructor-dashboard"
 						element={<Dashboard />}
 					/>
-					<Route
-						path="*"
-						element={<PageNotFound />}
-					/>
+					<Route path="*" element={<PageNotFound />} />
 				</Routes>
 			</Router>
 		</>
