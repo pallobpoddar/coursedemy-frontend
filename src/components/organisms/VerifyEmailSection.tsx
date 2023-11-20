@@ -46,7 +46,7 @@ const VerifyEmailSection = () => {
 		} else {
 			setShowCircularProgress(false);
 			setUserData(result);
-			dispatch(saveSignin(result));
+			dispatch(saveSignin(result.data));
 			navigate("/");
 		}
 	};
@@ -57,9 +57,10 @@ const VerifyEmailSection = () => {
 				display: "flex",
 				flexDirection: "column",
 				alignItems: "center",
-			}}
-		>
-			<Container maxWidth="xs" sx={{ backgroundColor: "white" }}>
+			}}>
+			<Container
+				maxWidth="xs"
+				sx={{ backgroundColor: "white" }}>
 				<Box
 					component="form"
 					sx={{
@@ -67,33 +68,37 @@ const VerifyEmailSection = () => {
 						flexDirection: "column",
 						alignItems: "center",
 					}}
-					onSubmit={handlerOnSubmit}
-				>
+					onSubmit={handlerOnSubmit}>
 					{userData.message !== "" && (
 						<AtomAlert
 							variant="filled"
 							severity="error"
-							sx={{ mb: 2, width: "100%" }}
-						>
+							sx={{ mb: 2, width: "100%" }}>
 							{userData.message}
 						</AtomAlert>
 					)}
-					<AtomTypography component="h1" variant="h4">
+					<AtomTypography
+						component="h1"
+						variant="h4">
 						Verify your email
 					</AtomTypography>
-					<AtomTypography component="p" sx={{ mt: 2 }}>
-						You're almost ready to start enjoying Coursedemy. Simply
-						click the button to verify your email.
+					<AtomTypography
+						component="p"
+						sx={{ mt: 2 }}>
+						You're almost ready to start enjoying Coursedemy. Simply click the
+						button to verify your email.
 					</AtomTypography>
 					<AtomButton
 						type="submit"
 						variant="contained"
 						size="large"
 						fullWidth
-						sx={{ mt: 2 }}
-					>
+						sx={{ mt: 2 }}>
 						{showCircularProgress === true ? (
-							<AtomCircularProgress color="inherit" size={25} />
+							<AtomCircularProgress
+								color="inherit"
+								size={25}
+							/>
 						) : (
 							<>Verify</>
 						)}
