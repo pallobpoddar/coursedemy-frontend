@@ -79,7 +79,7 @@ const CourseCreationForm = () => {
 				<AtomTypography component="h2" variant="h4">
 					How about a working title?
 				</AtomTypography>
-				<AtomTypography component="p" variant="body1">
+				<AtomTypography component="p" variant="body1" sx={{mb:}}>
 					It's ok if you can't think of a good title now. You can
 					change it later.
 				</AtomTypography>
