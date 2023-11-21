@@ -1,6 +1,10 @@
 import instructorInstance from "../utils/instructorInstance";
+import { useSelector } from "react-redux";
+import { IAuthStateProp } from "../interfaces/stateInterface";
 
 const useInstructor = () => {
+	const token = useSelector((state: IAuthStateProp) => state.auth.token);
+
 	const createInstructorProfile = async (data: {
 		name: string | null | undefined;
 		email: string | null | undefined;
@@ -12,6 +16,7 @@ const useInstructor = () => {
 				{
 					headers: {
 						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
 					},
 				}
 			);

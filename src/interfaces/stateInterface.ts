@@ -1,5 +1,5 @@
-import { IAuthSate } from "../redux/slices/authSlice";
+import { IAuthState } from "../redux/slices/authSlice";
 
-export interface IAuthSateProp {
-	auth: IAuthSate;
+export interface IAuthStateProp {
+	auth: IAuthState;
 }
