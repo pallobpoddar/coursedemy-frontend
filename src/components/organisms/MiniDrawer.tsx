@@ -114,7 +114,8 @@ const MiniDrawer = () => {
 				sx={{
 					backgroundColor: "#ffffff",
 					boxShadow: "none",
-				}}>
+				}}
+			>
 				<Toolbar>
 					<IconButton
 						color="primary"
@@ -124,34 +125,38 @@ const MiniDrawer = () => {
 						sx={{
 							mr: 5,
 							...(open && { display: "none" }),
-						}}>
+						}}
+					>
 						<MenuIcon />
 					</IconButton>
 
-					<AtomTypography
-						variant="h6"
-						component="div"
-						color="primary"
-						sx={{ display: { xs: "none", sm: "block" } }}>
-						Coursedemy
-					</AtomTypography>
+					<Link to="/" style={{ textDecoration: "none" }}>
+						<AtomTypography
+							variant="h6"
+							component="div"
+							color="primary"
+							sx={{ display: { xs: "none", sm: "block" } }}
+						>
+							Coursedemy
+						</AtomTypography>
+					</Link>
 
 					<AtomTypography
 						color="primary"
 						component="p"
 						variant="body1"
-						sx={{ flex: "1", textAlign: "right", mr: 10 }}>
+						sx={{ flex: "1", textAlign: "right", mr: 10 }}
+					>
 						<Link
 							to="/"
-							style={{ textDecoration: "none", color: "#1976D2" }}>
+							style={{ textDecoration: "none", color: "#1976D2" }}
+						>
 							Student
 						</Link>
 					</AtomTypography>
 				</Toolbar>
 			</AppBar>
-			<Drawer
-				variant="permanent"
-				open={open}>
+			<Drawer variant="permanent" open={open}>
 				<DrawerHeader>
 					<IconButton onClick={handleDrawerClose}>
 						{theme.direction === "rtl" ? (
@@ -163,32 +168,43 @@ const MiniDrawer = () => {
 				</DrawerHeader>
 				<Divider />
 				<List>
-					{["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-						<ListItem
-							key={text}
-							disablePadding
-							sx={{ display: "block" }}>
-							<ListItemButton
-								sx={{
-									minHeight: 48,
-									justifyContent: open ? "initial" : "center",
-									px: 2.5,
-								}}>
-								<ListItemIcon
+					{["Inbox", "Starred", "Send email", "Drafts"].map(
+						(text, index) => (
+							<ListItem
+								key={text}
+								disablePadding
+								sx={{ display: "block" }}
+							>
+								<ListItemButton
 									sx={{
-										minWidth: 0,
-										mr: open ? 3 : "auto",
-										justifyContent: "center",
-									}}>
-									{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-								</ListItemIcon>
-								<ListItemText
-									primary={text}
-									sx={{ opacity: open ? 1 : 0 }}
-								/>
-							</ListItemButton>
-						</ListItem>
-					))}
+										minHeight: 48,
+										justifyContent: open
+											? "initial"
+											: "center",
+										px: 2.5,
+									}}
+								>
+									<ListItemIcon
+										sx={{
+											minWidth: 0,
+											mr: open ? 3 : "auto",
+											justifyContent: "center",
+										}}
+									>
+										{index % 2 === 0 ? (
+											<InboxIcon />
+										) : (
+											<MailIcon />
+										)}
+									</ListItemIcon>
+									<ListItemText
+										primary={text}
+										sx={{ opacity: open ? 1 : 0 }}
+									/>
+								</ListItemButton>
+							</ListItem>
+						)
+					)}
 				</List>
 				<Divider />
 				<List>
@@ -196,20 +212,27 @@ const MiniDrawer = () => {
 						<ListItem
 							key={text}
 							disablePadding
-							sx={{ display: "block" }}>
+							sx={{ display: "block" }}
+						>
 							<ListItemButton
 								sx={{
 									minHeight: 48,
 									justifyContent: open ? "initial" : "center",
 									px: 2.5,
-								}}>
+								}}
+							>
 								<ListItemIcon
 									sx={{
 										minWidth: 0,
 										mr: open ? 3 : "auto",
 										justifyContent: "center",
-									}}>
-									{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+									}}
+								>
+									{index % 2 === 0 ? (
+										<InboxIcon />
+									) : (
+										<MailIcon />
+									)}
 								</ListItemIcon>
 								<ListItemText
 									primary={text}
@@ -220,9 +243,7 @@ const MiniDrawer = () => {
 					))}
 				</List>
 			</Drawer>
-			<Box
-				component="main"
-				sx={{ flexGrow: 1, p: 3 }}>
+			<Box component="main" sx={{ flexGrow: 1, p: 3 }}>
 				<DrawerHeader />
 				<Container maxWidth="lg">
 					<Paper
@@ -232,24 +253,15 @@ const MiniDrawer = () => {
 							height: "20vh",
 							display: "flex",
 							alignItems: "center",
-						}}>
-						<Grid
-							container
-							spacing={2}>
-							<Grid
-								item
-								xs={6}
-								textAlign="center">
-								<AtomTypography
-									component="p"
-									variant="body1">
+						}}
+					>
+						<Grid container spacing={2}>
+							<Grid item xs={6} textAlign="center">
+								<AtomTypography component="p" variant="body1">
 									Jump Into Course Creation
 								</AtomTypography>
 							</Grid>
-							<Grid
-								item
-								xs
-								textAlign="center">
+							<Grid item xs textAlign="center">
 								<Link to="/instructor/course/create">
 									<AtomButton variant="contained">
 										Create Your Course

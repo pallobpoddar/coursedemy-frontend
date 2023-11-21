@@ -18,23 +18,17 @@ type Props = {
 		| ControllerRenderProps<
 				{
 					name: string;
-					email: string;
-					password: string;
 				},
 				"name"
 		  >
 		| ControllerRenderProps<
 				{
-					name: string;
 					email: string;
-					password: string;
 				},
 				"email"
 		  >
 		| ControllerRenderProps<
 				{
-					name: string;
-					email: string;
 					password: string;
 				},
 				"password"
@@ -44,6 +38,12 @@ type Props = {
 					confirmPassword: string;
 				},
 				"confirmPassword"
+		  >
+		| ControllerRenderProps<
+				{
+					title: string;
+				},
+				"title"
 		  >;
 	error?: boolean;
 	helperText?: React.ReactNode;

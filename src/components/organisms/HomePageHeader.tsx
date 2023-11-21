@@ -7,7 +7,6 @@ import Toolbar from "@mui/material/Toolbar";
 import MenuItem from "@mui/material/MenuItem";
 import Popper from "@mui/material/Popper";
 import Fade from "@mui/material/Fade";
-import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
@@ -23,31 +22,45 @@ import {
 	StyledInputBase,
 } from "./HomePageHeader.styles";
 import { removeSignin, saveSignin } from "../../redux/slices/authSlice";
-import { IAuthSateProp } from "../../interfaces/stateInterface";
+import { IAuthStateProp } from "../../interfaces/stateInterface";
 import useInstructor from "../../hooks/useInstructor";
 import AtomCircularProgress from "../atoms/AtomCircularProgress";
 
 const HomePageHeader = () => {
 	const [open, setOpen] = useState(false);
-	const [instructorPopper, setInstructorPopper] = useState<null | HTMLElement>(
-		null
-	);
-
-	const handleMouseEnter = (event: React.MouseEvent<HTMLElement>) => {
-		setInstructorPopper(event.currentTarget);
-		setOpen(true);
-	};
-
-	const handleMouseLeave = () => {
-		setOpen(false);
-	};
+	const [instructorPopper, setInstructorPopper] =
+		useState<null | HTMLElement>(null);
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
 		useState<null | HTMLElement>(null);
 
+	const [showCircularProgress, setShowCircularProgress] = useState(false);
+
 	const isMenuOpen = Boolean(anchorEl);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+	const menuId = "primary-search-account-menu";
+	const mobileMenuId = "primary-search-account-menu-mobile";
+
+	const handleMouseEnterTeachOnCoursedemy = (
+		event: React.MouseEvent<HTMLElement>
+	) => {
+		setInstructorPopper(event.currentTarget);
+		setOpen(true);
+	};
+
+	const handleMouseLeaveTeachOnCoursedemy = () => {
+		setOpen(false);
+	};
+
+	const handleMouseEnterPopper = () => {
+		setOpen(true);
+	};
+
+	const handleMouseLeavePopper = () => {
+		setOpen(false);
+	};
 
 	const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -75,22 +88,17 @@ const HomePageHeader = () => {
 		handleMenuClose();
 	};
 
-	const menuId = "primary-search-account-menu";
-	const mobileMenuId = "primary-search-account-menu-mobile";
-
 	const name = useSelector(
-		(state: IAuthSateProp) => state.auth?.learnerReference?.name
+		(state: IAuthStateProp) => state.auth?.learnerReference?.name
 	);
 	const email = useSelector(
-		(state: IAuthSateProp) => state.auth?.learnerReference?.email
+		(state: IAuthStateProp) => state.auth?.learnerReference?.email
 	);
 
-	const role = useSelector((state: IAuthSateProp) => state.auth.role);
+	const role = useSelector((state: IAuthStateProp) => state.auth.role);
 	const instructorReference = useSelector(
-		(state: IAuthSateProp) => state.auth.instructorReference
+		(state: IAuthStateProp) => state.auth.instructorReference
 	);
-
-	const [showCircularProgress, setShowCircularProgress] = useState(false);
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -110,7 +118,7 @@ const HomePageHeader = () => {
 		} else {
 			setShowCircularProgress(false);
 			dispatch(saveSignin(result.data));
-			navigate("/instructor-dashboard");
+			navigate("/instructor/dashboard");
 		}
 	};
 
@@ -122,23 +130,20 @@ const HomePageHeader = () => {
 					backgroundColor: "#ffffff",
 					boxShadow: "none",
 					borderBottom: "0.5px solid #e5e5e5",
-				}}>
+				}}
+			>
 				<Toolbar>
-					<AtomIconButton
-						size="large"
-						edge="start"
-						color="primary"
-						aria-label="open drawer"
-						sx={{ mr: 2 }}>
-						<MenuIcon />
-					</AtomIconButton>
-					<AtomTypography
-						variant="h6"
-						component="div"
-						color="primary"
-						sx={{ display: { xs: "none", sm: "block" } }}>
-						Coursedemy
-					</AtomTypography>
+					<Link to="/" style={{ textDecoration: "none" }}>
+						<AtomTypography
+							variant="h6"
+							component="div"
+							color="primary"
+							sx={{ display: { xs: "none", sm: "block" } }}
+						>
+							Coursedemy
+						</AtomTypography>
+					</Link>
+
 					<Search>
 						<SearchIconWrapper>
 							<SearchIcon color="primary" />
@@ -153,16 +158,19 @@ const HomePageHeader = () => {
 					<Box sx={{ display: { xs: "none", md: "flex" } }}>
 						<AtomButton
 							variant="text"
-							onMouseEnter={handleMouseEnter}>
+							onMouseEnter={handleMouseEnterTeachOnCoursedemy}
+							onMouseLeave={handleMouseLeaveTeachOnCoursedemy}
+						>
+							{role === "learner" &&
+								instructorReference === null &&
+								"Teach on CourseDemy"}
 							<Link
 								to="/instructor/dashboard"
 								style={{
 									color: "#1976D2",
 									textDecoration: "none",
-								}}>
-								{role === "learner" &&
-									instructorReference === null &&
-									"Teach on CourseDemy"}
+								}}
+							>
 								{role === "learner" &&
 									instructorReference !== null &&
 									"Instructor"}
@@ -173,13 +181,13 @@ const HomePageHeader = () => {
 								id="teach-on-coursedemy-popper"
 								open={open}
 								anchorEl={instructorPopper}
-								onMouseLeave={handleMouseLeave}
+								onMouseEnter={handleMouseEnterPopper}
+								onMouseLeave={handleMouseLeavePopper}
 								transition
-								placement="bottom-end">
+								placement="bottom-end"
+							>
 								{({ TransitionProps }) => (
-									<Fade
-										{...TransitionProps}
-										timeout={350}>
+									<Fade {...TransitionProps} timeout={350}>
 										<Box
 											sx={{
 												border: 1,
@@ -187,15 +195,21 @@ const HomePageHeader = () => {
 												bgcolor: "background.paper",
 												width: "250px",
 												textAlign: "center",
-											}}>
-											Turn what you know into an opportunity and reach millions
+											}}
+										>
+											Turn what you know into an
+											opportunity and reach millions
 											around the world
 											<AtomButton
 												variant="contained"
 												fullWidth
 												sx={{ mt: 1 }}
-												onClick={handleOnClickTeachOnCoursedemyButton}>
-												{showCircularProgress === true ? (
+												onClick={
+													handleOnClickTeachOnCoursedemyButton
+												}
+											>
+												{showCircularProgress ===
+												true ? (
 													<AtomCircularProgress
 														color="inherit"
 														size={25}
@@ -212,16 +226,26 @@ const HomePageHeader = () => {
 						{role === null && (
 							<>
 								<Link to="/user/signin">
-									<AtomButton variant="outlined">Sign in</AtomButton>
+									<AtomButton
+										variant="outlined"
+										sx={{ mr: 2 }}
+									>
+										Sign in
+									</AtomButton>
 								</Link>
 								<Link to="learner/signup">
-									<AtomButton variant="contained"> Sign up</AtomButton>
+									<AtomButton variant="contained">
+										{" "}
+										Sign up
+									</AtomButton>
 								</Link>
 							</>
 						)}
 						{role === "learner" && (
 							<>
-								<AtomButton variant="text">My Learning</AtomButton>
+								<AtomButton variant="text">
+									My Learning
+								</AtomButton>
 								<AtomIconButton>
 									<FavoriteBorderOutlinedIcon />
 								</AtomIconButton>
@@ -239,7 +263,8 @@ const HomePageHeader = () => {
 									aria-controls={menuId}
 									aria-haspopup="true"
 									onClick={handleProfileMenuOpen}
-									color="primary">
+									color="primary"
+								>
 									<AccountCircle />
 								</AtomIconButton>
 							</>
@@ -252,7 +277,8 @@ const HomePageHeader = () => {
 							aria-controls={mobileMenuId}
 							aria-haspopup="true"
 							onClick={handleMobileMenuOpen}
-							color="primary">
+							color="primary"
+						>
 							<MoreIcon />
 						</AtomIconButton>
 					</Box>
@@ -272,7 +298,8 @@ const HomePageHeader = () => {
 					horizontal: "right",
 				}}
 				open={isMobileMenuOpen}
-				onClose={handleMobileMenuClose}>
+				onClose={handleMobileMenuClose}
+			>
 				<MenuItem onClick={handleProfileMenuOpen}>Profile</MenuItem>
 				<MenuItem onClick={handleSignout}>Sign out</MenuItem>
 			</MoleculeMenu>
@@ -290,9 +317,12 @@ const HomePageHeader = () => {
 					horizontal: "right",
 				}}
 				open={isMenuOpen}
-				onClose={handleMenuClose}>
+				onClose={handleMenuClose}
+			>
 				<MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-				<MenuItem onClick={handleSignoutAndCloseMenu}>Sign out</MenuItem>
+				<MenuItem onClick={handleSignoutAndCloseMenu}>
+					Sign out
+				</MenuItem>
 			</MoleculeMenu>
 		</Box>
 	);

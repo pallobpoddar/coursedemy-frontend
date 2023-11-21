@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-export interface IAuthSate {
+export interface IAuthState {
 	_id: string | null;
 	learnerReference: {
 		_id: string | null;
@@ -22,7 +22,7 @@ export interface IAuthSate {
 	token: string | null;
 }
 
-const initialState: IAuthSate = {
+const initialState: IAuthState = {
 	_id: null,
 	learnerReference: null,
 	instructorReference: null,
@@ -36,7 +36,7 @@ const authSlice = createSlice({
 	name: "auth",
 	initialState,
 	reducers: {
-		saveSignin: (state, action: PayloadAction<IAuthSate>) => {
+		saveSignin: (state, action: PayloadAction<IAuthState>) => {
 			state._id = action.payload._id;
 			state.learnerReference = action.payload.learnerReference;
 			state.instructorReference = action.payload.instructorReference;
