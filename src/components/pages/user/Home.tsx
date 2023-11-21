@@ -1,14 +1,11 @@
-import React from "react";
-import Header from "../../organisms/Header";
+import HomePageHeader from "../../organisms/HomePageHeader";
 import Banner from "../../organisms/Banner";
 import CourseList from "../../organisms/CourseList";
 
-type Props = {};
-
-const Home = (props: Props) => {
+const Home = () => {
 	return (
 		<>
-			<Header />
+			<HomePageHeader />
 			<Banner />
 			<CourseList />
 		</>

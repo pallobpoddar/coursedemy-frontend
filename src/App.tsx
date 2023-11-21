@@ -10,6 +10,7 @@ import PageNotFound from "./components/pages/user/PageNotFound";
 import UserAuthentication from "./components/pages/user/UserAuthentication";
 import Dashboard from "./components/pages/instructor/Dashboard";
 import InstructorAuthentication from "./components/pages/instructor/InstructorAuthentication";
+import CourseCreation from "./components/pages/instructor/CourseCreation";
 
 const App = () => {
 	return (
@@ -17,34 +18,49 @@ const App = () => {
 			<CssBaseline />
 			<Router>
 				<Routes>
-					<Route path="/" element={<Home />} />
+					<Route
+						path="/"
+						element={<Home />}
+					/>
+
 					<Route element={<UserAuthentication />}>
-						<Route path="/user/signup" element={<SignUp />} />
-						<Route path="/user/signin" element={<SignIn />} />
-					</Route>
-					<Route element={<InstructorAuthentication />}>
 						<Route
-							path="/instructor-dashboard"
-							element={<Dashboard />}
+							path="/user/signup"
+							element={<SignUp />}
+						/>
+						<Route
+							path="/user/signin"
+							element={<SignIn />}
+						/>
+						<Route
+							path="/user/verify-email/:token/:id"
+							element={<VerifyEmail />}
+						/>
+						<Route
+							path="/user/forgot-password"
+							element={<ForgotPassword />}
+						/>
+						<Route
+							path="/reset-password/:token/:id"
+							element={<ResetPassword />}
 						/>
 					</Route>
+
+					<Route element={<InstructorAuthentication />}>
+						<Route
+							path="/instructor/dashboard"
+							element={<Dashboard />}
+						/>
+						<Route
+							path="/instructor/course/create"
+							element={<CourseCreation />}
+						/>
+					</Route>
+
 					<Route
-						path="/user/verify-email/:token/:id"
-						element={<VerifyEmail />}
+						path="*"
+						element={<PageNotFound />}
 					/>
-					<Route
-						path="/user/forgot-password"
-						element={<ForgotPassword />}
-					/>
-					<Route
-						path="/reset-password/:token/:id"
-						element={<ResetPassword />}
-					/>
-					<Route
-						path="/instructor-dashboard"
-						element={<Dashboard />}
-					/>
-					<Route path="*" element={<PageNotFound />} />
 				</Routes>
 			</Router>
 		</>
