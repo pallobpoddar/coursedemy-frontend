@@ -45,6 +45,20 @@ const useCourse = () => {
 		}
 	};
 
+	const getAllByInstructorReference = async (data: {
+		instructorReference: string | null | undefined;
+	}) => {
+		try {
+			const response = await courseInstance.post(
+				"/get-all-by-instructor-reference",
+				data,
+				{}
+			);
+		} catch (error) {
+			return { error: error };
+		}
+	};
+
 	return { createCourse };
 };
 
