@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instructorInstance = axios.create({
-	baseURL: "http://localhost:8000/api/instructors",
+	baseURL: `${import.meta.env.VITE_SERVER_URL}/instructors`,
 	timeout: 20000,
 });
 

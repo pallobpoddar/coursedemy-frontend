@@ -12,9 +12,10 @@ const CourseCreation = () => {
 					display: "flex",
 					alignItems: "center",
 					minHeight: "100vh",
-				}}
-			>
-				<Container maxWidth="sm" sx={{ textAlign: "center" }}>
+				}}>
+				<Container
+					maxWidth="sm"
+					sx={{ textAlign: "center" }}>
 					<CourseCreationForm />
 				</Container>
 			</Box>

@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import { SxProps } from "@mui/material";
 
 type Props = {
+	onChange?: (event: any) => void;
 	type?: string;
 	variant?: "filled" | "outlined" | "standard";
 	margin?: "dense" | "none" | "normal";
@@ -53,7 +54,12 @@ type Props = {
 const MoleculeTextField = (props: Props) => {
 	const { field, ...textFieldProps } = props;
 
-	return <TextField {...textFieldProps} {...field} />;
+	return (
+		<TextField
+			{...textFieldProps}
+			{...field}
+		/>
+	);
 };
 
 export default MoleculeTextField;

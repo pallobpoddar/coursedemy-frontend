@@ -1,6 +1,6 @@
-import instructorInstance from "../utils/instructorInstance";
 import { useDispatch, useSelector } from "react-redux";
 import { IAuthStateProp } from "../interfaces/stateInterface";
+import categoryInstance from "../utils/categoryInstance";
 import { jwtDecode } from "jwt-decode";
 import { removeSignin } from "../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ interface DecodedToken {
 	exp?: number;
 }
 
-const useInstructor = () => {
+const useCategory = () => {
 	const token = useSelector((state: IAuthStateProp) => state.auth.token);
 	if (token) {
 		const decodedToken: DecodedToken = jwtDecode(token);
@@ -25,28 +25,20 @@ const useInstructor = () => {
 		}
 	}
 
-	const createInstructorProfile = async (data: {
-		name: string | null | undefined;
-		email: string | null | undefined;
-	}) => {
+	const getCategories = async () => {
 		try {
-			const response = await instructorInstance.post(
-				"/create-instructor-profile",
-				data,
-				{
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
-					},
-				}
-			);
+			const response = await categoryInstance.get("/all", {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
 			return response.data;
 		} catch (error) {
 			return { error: error };
 		}
 	};
 
-	return { createInstructorProfile };
+	return { getCategories };
 };
 
-export default useInstructor;
+export default useCategory;
