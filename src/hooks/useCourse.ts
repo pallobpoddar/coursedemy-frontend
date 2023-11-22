@@ -1,4 +1,4 @@
-import instructorInstance from "../utils/instructorInstance";
+import courseInstance from "../utils/courseInstance";
 import { useDispatch, useSelector } from "react-redux";
 import { IAuthStateProp } from "../interfaces/stateInterface";
 import { jwtDecode } from "jwt-decode";
@@ -9,7 +9,9 @@ interface DecodedToken {
 	exp?: number;
 }
 
-const useInstructor = () => {
+type Category = string | null;
+
+const useCourse = () => {
 	const token = useSelector((state: IAuthStateProp) => state.auth.token);
 	if (token) {
 		const decodedToken: DecodedToken = jwtDecode(token);
@@ -25,28 +27,25 @@ const useInstructor = () => {
 		}
 	}
 
-	const createInstructorProfile = async (data: {
-		name: string | null | undefined;
-		email: string | null | undefined;
+	const createCourse = async (formData: {
+		instructorReference: string | null | undefined;
+		title: string;
+		categoryReference: Category;
 	}) => {
 		try {
-			const response = await instructorInstance.post(
-				"/create-instructor-profile",
-				data,
-				{
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
-					},
-				}
-			);
+			const response = await courseInstance.post("/create", formData, {
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+			});
 			return response.data;
 		} catch (error) {
 			return { error: error };
 		}
 	};
 
-	return { createInstructorProfile };
+	return { createCourse };
 };
 
-export default useInstructor;
+export default useCourse;

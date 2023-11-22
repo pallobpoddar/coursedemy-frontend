@@ -28,8 +28,9 @@ import AtomCircularProgress from "../atoms/AtomCircularProgress";
 
 const HomePageHeader = () => {
 	const [open, setOpen] = useState(false);
-	const [instructorPopper, setInstructorPopper] =
-		useState<null | HTMLElement>(null);
+	const [instructorPopper, setInstructorPopper] = useState<null | HTMLElement>(
+		null
+	);
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
@@ -130,16 +131,16 @@ const HomePageHeader = () => {
 					backgroundColor: "#ffffff",
 					boxShadow: "none",
 					borderBottom: "0.5px solid #e5e5e5",
-				}}
-			>
+				}}>
 				<Toolbar>
-					<Link to="/" style={{ textDecoration: "none" }}>
+					<Link
+						to="/"
+						style={{ textDecoration: "none" }}>
 						<AtomTypography
 							variant="h6"
 							component="div"
 							color="primary"
-							sx={{ display: { xs: "none", sm: "block" } }}
-						>
+							sx={{ display: { xs: "none", sm: "block" } }}>
 							Coursedemy
 						</AtomTypography>
 					</Link>
@@ -159,8 +160,7 @@ const HomePageHeader = () => {
 						<AtomButton
 							variant="text"
 							onMouseEnter={handleMouseEnterTeachOnCoursedemy}
-							onMouseLeave={handleMouseLeaveTeachOnCoursedemy}
-						>
+							onMouseLeave={handleMouseLeaveTeachOnCoursedemy}>
 							{role === "learner" &&
 								instructorReference === null &&
 								"Teach on CourseDemy"}
@@ -169,8 +169,7 @@ const HomePageHeader = () => {
 								style={{
 									color: "#1976D2",
 									textDecoration: "none",
-								}}
-							>
+								}}>
 								{role === "learner" &&
 									instructorReference !== null &&
 									"Instructor"}
@@ -184,10 +183,11 @@ const HomePageHeader = () => {
 								onMouseEnter={handleMouseEnterPopper}
 								onMouseLeave={handleMouseLeavePopper}
 								transition
-								placement="bottom-end"
-							>
+								placement="bottom-end">
 								{({ TransitionProps }) => (
-									<Fade {...TransitionProps} timeout={350}>
+									<Fade
+										{...TransitionProps}
+										timeout={350}>
 										<Box
 											sx={{
 												border: 1,
@@ -195,21 +195,15 @@ const HomePageHeader = () => {
 												bgcolor: "background.paper",
 												width: "250px",
 												textAlign: "center",
-											}}
-										>
-											Turn what you know into an
-											opportunity and reach millions
+											}}>
+											Turn what you know into an opportunity and reach millions
 											around the world
 											<AtomButton
 												variant="contained"
 												fullWidth
 												sx={{ mt: 1 }}
-												onClick={
-													handleOnClickTeachOnCoursedemyButton
-												}
-											>
-												{showCircularProgress ===
-												true ? (
+												onClick={handleOnClickTeachOnCoursedemyButton}>
+												{showCircularProgress === true ? (
 													<AtomCircularProgress
 														color="inherit"
 														size={25}
@@ -228,24 +222,18 @@ const HomePageHeader = () => {
 								<Link to="/user/signin">
 									<AtomButton
 										variant="outlined"
-										sx={{ mr: 2 }}
-									>
+										sx={{ mr: 2 }}>
 										Sign in
 									</AtomButton>
 								</Link>
-								<Link to="learner/signup">
-									<AtomButton variant="contained">
-										{" "}
-										Sign up
-									</AtomButton>
+								<Link to="user/signup">
+									<AtomButton variant="contained"> Sign up</AtomButton>
 								</Link>
 							</>
 						)}
 						{role === "learner" && (
 							<>
-								<AtomButton variant="text">
-									My Learning
-								</AtomButton>
+								<AtomButton variant="text">My Learning</AtomButton>
 								<AtomIconButton>
 									<FavoriteBorderOutlinedIcon />
 								</AtomIconButton>
@@ -263,8 +251,7 @@ const HomePageHeader = () => {
 									aria-controls={menuId}
 									aria-haspopup="true"
 									onClick={handleProfileMenuOpen}
-									color="primary"
-								>
+									color="primary">
 									<AccountCircle />
 								</AtomIconButton>
 							</>
@@ -277,8 +264,7 @@ const HomePageHeader = () => {
 							aria-controls={mobileMenuId}
 							aria-haspopup="true"
 							onClick={handleMobileMenuOpen}
-							color="primary"
-						>
+							color="primary">
 							<MoreIcon />
 						</AtomIconButton>
 					</Box>
@@ -298,8 +284,7 @@ const HomePageHeader = () => {
 					horizontal: "right",
 				}}
 				open={isMobileMenuOpen}
-				onClose={handleMobileMenuClose}
-			>
+				onClose={handleMobileMenuClose}>
 				<MenuItem onClick={handleProfileMenuOpen}>Profile</MenuItem>
 				<MenuItem onClick={handleSignout}>Sign out</MenuItem>
 			</MoleculeMenu>
@@ -317,12 +302,9 @@ const HomePageHeader = () => {
 					horizontal: "right",
 				}}
 				open={isMenuOpen}
-				onClose={handleMenuClose}
-			>
+				onClose={handleMenuClose}>
 				<MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-				<MenuItem onClick={handleSignoutAndCloseMenu}>
-					Sign out
-				</MenuItem>
+				<MenuItem onClick={handleSignoutAndCloseMenu}>Sign out</MenuItem>
 			</MoleculeMenu>
 		</Box>
 	);

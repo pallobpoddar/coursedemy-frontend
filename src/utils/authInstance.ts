@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const authInstance = axios.create({
-	baseURL: "http://localhost:8000/api/auths",
+	baseURL: `${import.meta.env.VITE_SERVER_URL}/auths`,
 	timeout: 20000,
 });
 
