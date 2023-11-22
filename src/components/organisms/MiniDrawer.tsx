@@ -16,12 +16,9 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
-import Paper from "@mui/material/Paper";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
 import AtomTypography from "../atoms/AtomTypography";
-import AtomButton from "../atoms/AtomButton";
 import { Link } from "react-router-dom";
+import InstructorDashboardCourseList from "./InstructorDashboardCourseList";
 
 const drawerWidth = 240;
 
@@ -51,7 +48,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 	alignItems: "center",
 	justifyContent: "flex-end",
 	padding: theme.spacing(0, 1),
-	// necessary for content to be below app bar
 	...theme.mixins.toolbar,
 }));
 
@@ -243,35 +239,7 @@ const MiniDrawer = () => {
 					))}
 				</List>
 			</Drawer>
-			<Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-				<DrawerHeader />
-				<Container maxWidth="lg">
-					<Paper
-						elevation={2}
-						sx={{
-							width: "100%",
-							height: "20vh",
-							display: "flex",
-							alignItems: "center",
-						}}
-					>
-						<Grid container spacing={2}>
-							<Grid item xs={6} textAlign="center">
-								<AtomTypography component="p" variant="body1">
-									Jump Into Course Creation
-								</AtomTypography>
-							</Grid>
-							<Grid item xs textAlign="center">
-								<Link to="/instructor/course/create">
-									<AtomButton variant="contained">
-										Create Your Course
-									</AtomButton>
-								</Link>
-							</Grid>
-						</Grid>
-					</Paper>
-				</Container>
-			</Box>
+			<InstructorDashboardCourseList />
 		</Box>
 	);
 };
