@@ -45,21 +45,43 @@ const useCourse = () => {
 		}
 	};
 
-	const getAllByInstructorReference = async (data: {
-		instructorReference: string | null | undefined;
-	}) => {
+	const getAllByInstructorReference = async (
+		data: string | null | undefined
+	) => {
 		try {
-			const response = await courseInstance.post(
-				"/get-all-by-instructor-reference",
-				data,
-				{}
+			const response = await courseInstance.get(
+				`/get-all-by-instructor-reference/${data}`,
+				{
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+				}
 			);
+			return response.data;
 		} catch (error) {
 			return { error: error };
 		}
 	};
 
-	return { createCourse };
+	const getOneByCourseReference = async (data: string | null | undefined) => {
+		try {
+			const response = await courseInstance.get(
+				`/get-one-by-course-reference/${data}`,
+				{
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			return response.data;
+		} catch (error) {
+			return { error: error };
+		}
+	};
+
+	return { createCourse, getAllByInstructorReference, getOneByCourseReference };
 };
 
 export default useCourse;
