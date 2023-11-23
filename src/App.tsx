@@ -11,6 +11,7 @@ import UserAuthentication from "./components/pages/user/UserAuthentication";
 import Dashboard from "./components/pages/instructor/Dashboard";
 import InstructorAuthentication from "./components/pages/instructor/InstructorAuthentication";
 import CourseCreation from "./components/pages/instructor/CourseCreation";
+import CourseInformation from "./components/pages/instructor/CourseInformation";
 
 const App = () => {
 	return (
@@ -54,6 +55,10 @@ const App = () => {
 						<Route
 							path="/instructor/course/create"
 							element={<CourseCreation />}
+						/>
+						<Route
+							path="/instructor/course/:courseReference"
+							element={<CourseInformation />}
 						/>
 					</Route>
 
