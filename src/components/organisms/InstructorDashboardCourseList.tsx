@@ -12,6 +12,7 @@ import useCourse from "../../hooks/useCourse";
 import { IAuthStateProp } from "../../interfaces/stateInterface";
 import IMAGE_URL from "../../constants/imageURLs";
 import { Course } from "../../interfaces/courseInterface";
+import AtomSkeleton from "../atoms/AtomSkeleton";
 
 const InstructorDashboardCourseList = () => {
 	const DrawerHeader = styled("div")(({ theme }) => ({
@@ -29,16 +30,21 @@ const InstructorDashboardCourseList = () => {
 	);
 
 	const [courses, setCourses] = useState<Course[]>([]);
+	const [showSkeleton, setShowSkeleton] = useState(true);
 
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		const getCoursesFromApi = async () => {
 			try {
-				const result = await getAllByInstructorReference(instructorReference);
+				const result = await getAllByInstructorReference(
+					instructorReference
+				);
 				setCourses(result.data.result);
 			} catch (error) {
 				console.error("Error setting data:", error);
+			} finally {
+				setShowSkeleton(false);
 			}
 		};
 
@@ -50,9 +56,7 @@ const InstructorDashboardCourseList = () => {
 	};
 
 	return (
-		<Box
-			component="main"
-			sx={{ flexGrow: 1, p: 3 }}>
+		<Box component="main" sx={{ flexGrow: 1, p: 3 }}>
 			<DrawerHeader />
 			<Container maxWidth="xl">
 				<Card
@@ -64,32 +68,62 @@ const InstructorDashboardCourseList = () => {
 						height: "20vh",
 						display: "flex",
 						alignItems: "center",
-					}}>
-					<Grid
-						container
-						spacing={2}>
-						<Grid
-							item
-							xs={6}
-							textAlign="center">
-							<AtomTypography
-								component="p"
-								variant="body1">
+					}}
+				>
+					<Grid container spacing={2}>
+						<Grid item xs={6} textAlign="center">
+							<AtomTypography component="p" variant="body1">
 								Jump Into Course Creation
 							</AtomTypography>
 						</Grid>
-						<Grid
-							item
-							xs
-							textAlign="center">
+						<Grid item xs textAlign="center">
 							<Link to="/instructor/course/create">
-								<AtomButton variant="contained">Create Your Course</AtomButton>
+								<AtomButton variant="contained">
+									Create Your Course
+								</AtomButton>
 							</Link>
 						</Grid>
 					</Grid>
 				</Card>
-				{courses.map((course) => (
+				{showSkeleton && (
+					<Box width="100%" height="20vh" display="flex">
+						<AtomSkeleton
+							variant="rectangular"
+							animation="wave"
+							width="10%"
+							height="100%"
+						/>
+						<Box
+							width="40%"
+							display="flex"
+							flexDirection="column"
+							justifyContent="space-between"
+							m={2}
+						>
+							<AtomSkeleton variant="text" animation="wave" />
+							<AtomSkeleton
+								variant="text"
+								animation="wave"
+								width="20%"
+							/>
+						</Box>
+						<Box
+							width="50%"
+							display="flex"
+							alignItems="center"
+							justifyContent="center"
+						>
+							<AtomSkeleton
+								variant="text"
+								animation="wave"
+								width="25%"
+							/>
+						</Box>
+					</Box>
+				)}
+				{courses.map((course, index) => (
 					<Card
+						key={index}
 						variant="outlined"
 						square
 						onClick={() => handleCardClick(course._id)}
@@ -103,28 +137,33 @@ const InstructorDashboardCourseList = () => {
 								cursor: "pointer",
 								boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
 							},
-						}}>
+						}}
+					>
 						<img
 							src={IMAGE_URL.INSTRUCTOR_DASHBOARD_DECORATION}
 							width="10%"
 							height="100%"
 						/>
+
 						<Box
 							width="40%"
 							display="flex"
 							flexDirection="column"
 							justifyContent="space-between"
-							m={2}>
+							m={2}
+						>
 							<AtomTypography
 								component="p"
 								variant="body2"
-								sx={{ fontWeight: "bold" }}>
+								sx={{ fontWeight: "bold" }}
+							>
 								{course.title}
 							</AtomTypography>
 							<AtomTypography
 								component="p"
 								variant="body1"
-								sx={{ fontWeight: "bold" }}>
+								sx={{ fontWeight: "bold" }}
+							>
 								{course.isApproved ? "Published" : "Draft"}
 							</AtomTypography>
 						</Box>
@@ -132,12 +171,14 @@ const InstructorDashboardCourseList = () => {
 							width="50%"
 							display="flex"
 							alignItems="center"
-							justifyContent="center">
+							justifyContent="center"
+						>
 							<AtomTypography
 								component="p"
 								variant="body1"
 								color="primary"
-								sx={{ fontWeight: "bold" }}>
+								sx={{ fontWeight: "bold" }}
+							>
 								Finish your course
 							</AtomTypography>
 						</Box>
