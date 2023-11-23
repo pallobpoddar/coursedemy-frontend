@@ -1,10 +1,11 @@
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Toolbar from "@mui/material/Toolbar";
-import React from "react";
 import AtomTypography from "../atoms/AtomTypography";
 
-type Props = {};
+type Props = {
+	courseId: string;
+};
 
 const CourseCurriculum = (props: Props) => {
 	return (
