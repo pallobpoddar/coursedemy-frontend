@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
@@ -14,8 +14,6 @@ import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutl
 import AtomTypography from "../atoms/AtomTypography";
 import useCourse from "../../hooks/useCourse";
 import { Course } from "../../interfaces/courseInterface";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
 import AtomButton from "../atoms/AtomButton";
 import CourseCurriculum from "./CourseCurriculum";
 
@@ -55,25 +53,33 @@ const ClippedDrawer = () => {
 					backgroundColor: "#ffffff",
 					boxShadow: "none",
 					borderBottom: "0.5px solid #e5e5e5",
-				}}>
+				}}
+			>
 				<Toolbar>
 					<ArrowBackIosNewOutlinedIcon
 						color="primary"
 						fontSize="small"
 						sx={{ mr: 1 }}
 					/>
+					<Link
+						to="/instructor/dashboard"
+						style={{ textDecoration: "none" }}
+					>
+						<AtomTypography
+							variant="body1"
+							component="div"
+							color="primary"
+							sx={{ mr: 5 }}
+						>
+							Back to courses
+						</AtomTypography>
+					</Link>
 					<AtomTypography
 						variant="body1"
 						component="div"
 						color="primary"
-						sx={{ mr: 5 }}>
-						Back to courses
-					</AtomTypography>
-					<AtomTypography
-						variant="body1"
-						component="div"
-						color="primary"
-						sx={{ mr: 5 }}>
+						sx={{ mr: 5 }}
+					>
 						{course.title}
 					</AtomTypography>
 					<AtomButton variant="text">
@@ -90,17 +96,18 @@ const ClippedDrawer = () => {
 						width: drawerWidth,
 						boxSizing: "border-box",
 					},
-				}}>
+				}}
+			>
 				<Toolbar />
 				<Box sx={{ overflow: "auto" }}>
 					<List>
 						{["Curriculum"].map((text, index) => (
-							<ListItem
-								key={text}
-								disablePadding>
+							<ListItem key={text} disablePadding>
 								<ListItemButton>
 									<ListItemIcon>
-										{index === 0 && <CircleOutlinedIcon fontSize="small" />}
+										{index === 0 && (
+											<CircleOutlinedIcon fontSize="small" />
+										)}
 									</ListItemIcon>
 									<ListItemText primary={text} />
 								</ListItemButton>
@@ -109,7 +116,7 @@ const ClippedDrawer = () => {
 					</List>
 				</Box>
 			</Drawer>
-			<CourseCurriculum courseId={course._id} />
+			<CourseCurriculum />
 		</Box>
 	);
 };

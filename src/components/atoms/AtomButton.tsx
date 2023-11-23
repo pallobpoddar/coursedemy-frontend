@@ -10,7 +10,14 @@ type Props = {
 	variant?: "contained" | "outlined" | "text";
 	fullWidth?: boolean;
 	children: React.ReactNode;
-	color?: any;
+	color?:
+		| "inherit"
+		| "primary"
+		| "secondary"
+		| "success"
+		| "error"
+		| "info"
+		| "warning";
 	size?: "small" | "medium" | "large";
 	sx?: SxProps;
 };

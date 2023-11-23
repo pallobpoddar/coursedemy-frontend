@@ -28,7 +28,8 @@ const useSection = () => {
 	const getAllByCourseReference = async (data: string | null | undefined) => {
 		try {
 			const response = await sectionInstance.get(
-				`/get-all-by-section-reference/${data}`,
+				// `/get-all-by-course-reference/${data}`,
+				`/get-all-by-course-reference/${data}`,
 				{
 					headers: {
 						"Content-Type": "application/json",
