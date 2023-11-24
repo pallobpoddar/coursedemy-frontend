@@ -67,7 +67,6 @@ const CourseCreationForm = () => {
 			setShowCircularProgress(false);
 			setCourseData(result.error.response.data);
 		} else {
-			console.log(result);
 			setShowCircularProgress(false);
 			setCourseData(result);
 			navigate("/instructor/dashboard");

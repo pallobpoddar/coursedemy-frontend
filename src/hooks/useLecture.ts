@@ -3,13 +3,13 @@ import { IAuthStateProp } from "../interfaces/stateInterface";
 import { jwtDecode } from "jwt-decode";
 import { removeSignin } from "../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
-import sectionInstance from "../utils/sectionInstance";
+import lectureInstance from "../utils/lectureInstance";
 
 interface DecodedToken {
 	exp?: number;
 }
 
-const useSection = () => {
+const useLecture = () => {
 	const token = useSelector((state: IAuthStateProp) => state.auth.token);
 	if (token) {
 		const decodedToken: DecodedToken = jwtDecode(token);
@@ -25,24 +25,24 @@ const useSection = () => {
 		}
 	}
 
-	const getAllByCourseReference = async (data: string | null | undefined) => {
+	const uploadContent = async (data: {
+		lectureReference: string | null | undefined;
+		content: File | null;
+	}) => {
 		try {
-			const response = await sectionInstance.get(
-				`/get-all-by-course-reference/${data}`,
-				{
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
-					},
-				}
-			);
+			const response = await lectureInstance.patch("/upload-content", data, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+					Authorization: `Bearer ${token}`,
+				},
+			});
 			return response.data;
 		} catch (error) {
 			return { error: error };
 		}
 	};
 
-	return { getAllByCourseReference };
+	return { uploadContent };
 };
 
-export default useSection;
+export default useLecture;

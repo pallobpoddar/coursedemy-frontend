@@ -7,8 +7,10 @@ type Props = {
 	onMouseLeave?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 	type?: "button" | "submit" | "reset";
+	component?: React.ElementType;
 	variant?: "contained" | "outlined" | "text";
 	fullWidth?: boolean;
+	disabled?: boolean;
 	children: React.ReactNode;
 	color?:
 		| "inherit"
