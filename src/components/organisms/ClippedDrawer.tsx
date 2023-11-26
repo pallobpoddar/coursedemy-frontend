@@ -15,7 +15,6 @@ import AtomTypography from "../atoms/AtomTypography";
 import useCourse from "../../hooks/useCourse";
 import { Course } from "../../interfaces/courseInterface";
 import AtomButton from "../atoms/AtomButton";
-import CourseCurriculum from "./CourseCurriculum";
 
 const drawerWidth = 240;
 
@@ -45,7 +44,7 @@ const ClippedDrawer = () => {
 	}, []);
 
 	return (
-		<Box sx={{ display: "flex" }}>
+		<>
 			<AppBar
 				position="fixed"
 				sx={{
@@ -98,26 +97,33 @@ const ClippedDrawer = () => {
 					},
 				}}
 			>
-				<Toolbar />
+				<Toolbar sx={{ mt: "30%" }} />
 				<Box sx={{ overflow: "auto" }}>
 					<List>
-						{["Curriculum"].map((text, index) => (
-							<ListItem key={text} disablePadding>
-								<ListItemButton>
-									<ListItemIcon>
-										{index === 0 && (
-											<CircleOutlinedIcon fontSize="small" />
-										)}
-									</ListItemIcon>
-									<ListItemText primary={text} />
-								</ListItemButton>
-							</ListItem>
-						))}
+						{["Curriculum", "Assignments", "Quizzes"].map(
+							(text, _) => (
+								<ListItem key={text} disablePadding>
+									<Link
+										to={`/instructor/course/${courseReference}/${text.toLowerCase()}`}
+										style={{
+											textDecoration: "none",
+											color: "#1976D2",
+										}}
+									>
+										<ListItemButton>
+											<ListItemIcon>
+												<CircleOutlinedIcon fontSize="small" />
+											</ListItemIcon>
+											<ListItemText primary={text} />
+										</ListItemButton>
+									</Link>
+								</ListItem>
+							)
+						)}
 					</List>
 				</Box>
 			</Drawer>
-			<CourseCurriculum />
-		</Box>
+		</>
 	);
 };
 

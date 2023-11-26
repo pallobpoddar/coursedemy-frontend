@@ -11,7 +11,9 @@ type Props = {
 	required?: boolean;
 	fullWidth?: boolean;
 	id: string;
-	label: React.ReactNode;
+	defaultValue?: any;
+	placeholder?: string;
+	label?: React.ReactNode;
 	autoComplete?: string;
 	autoFocus?: boolean;
 	InputProps?: object;
@@ -54,12 +56,7 @@ type Props = {
 const MoleculeTextField = (props: Props) => {
 	const { field, ...textFieldProps } = props;
 
-	return (
-		<TextField
-			{...textFieldProps}
-			{...field}
-		/>
-	);
+	return <TextField {...textFieldProps} {...field} />;
 };
 
 export default MoleculeTextField;

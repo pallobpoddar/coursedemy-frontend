@@ -25,14 +25,14 @@ const useLecture = () => {
 		}
 	}
 
-	const uploadContent = async (data: {
-		lectureReference: string | null | undefined;
-		content: File | null;
+	const createLecture = async (data: {
+		sectionReference: string | null | undefined;
+		title: string;
 	}) => {
 		try {
-			const response = await lectureInstance.patch("/upload-content", data, {
+			const response = await lectureInstance.post("/create", data, {
 				headers: {
-					"Content-Type": "multipart/form-data",
+					"Content-Type": "application/json",
 					Authorization: `Bearer ${token}`,
 				},
 			});
@@ -42,7 +42,72 @@ const useLecture = () => {
 		}
 	};
 
-	return { uploadContent };
+	const updateOneByLectureReference = async (data: {
+		id: string | null | undefined;
+		title?: string;
+		isAccessibleToUnsubsribedLearners?: boolean;
+	}) => {
+		try {
+			const response = await lectureInstance.patch(
+				"/update-one-by-id",
+				data,
+				{
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			return response.data;
+		} catch (error) {
+			return { error: error };
+		}
+	};
+
+	const uploadContent = async (data: {
+		lectureReference: string | null | undefined;
+		content: File | null;
+	}) => {
+		try {
+			const response = await lectureInstance.patch(
+				"/upload-content",
+				data,
+				{
+					headers: {
+						"Content-Type": "multipart/form-data",
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			return response.data;
+		} catch (error) {
+			return { error: error };
+		}
+	};
+
+	const deleteOneByLectureReference = async (id: string) => {
+		try {
+			const response = await lectureInstance.delete(
+				`/delete-one-by-id/${id}`,
+				{
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			return response.data;
+		} catch (error) {
+			return { error: error };
+		}
+	};
+
+	return {
+		createLecture,
+		updateOneByLectureReference,
+		uploadContent,
+		deleteOneByLectureReference,
+	};
 };
 
 export default useLecture;

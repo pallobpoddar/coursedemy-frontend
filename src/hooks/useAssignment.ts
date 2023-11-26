@@ -1,15 +1,15 @@
+import assignmentInstance from "../utils/assignmentInstance";
 import { useDispatch, useSelector } from "react-redux";
 import { IAuthStateProp } from "../interfaces/stateInterface";
 import { jwtDecode } from "jwt-decode";
 import { removeSignin } from "../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
-import sectionInstance from "../utils/sectionInstance";
 
 interface DecodedToken {
 	exp?: number;
 }
 
-const useSection = () => {
+const useAssignment = () => {
 	const token = useSelector((state: IAuthStateProp) => state.auth.token);
 	if (token) {
 		const decodedToken: DecodedToken = jwtDecode(token);
@@ -25,27 +25,15 @@ const useSection = () => {
 		}
 	}
 
-	const createSection = async (data: {
-		courseReference: string | null | undefined;
+	const createAssignment = async (formData: {
+		courseReference: string;
 		title: string;
+		content: string;
 	}) => {
 		try {
-			const response = await sectionInstance.post("/create", data, {
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${token}`,
-				},
-			});
-			return response.data;
-		} catch (error) {
-			return { error: error };
-		}
-	};
-
-	const getAllByCourseReference = async (data: string | null | undefined) => {
-		try {
-			const response = await sectionInstance.get(
-				`/get-all-by-course-reference/${data}`,
+			const response = await assignmentInstance.post(
+				"/create",
+				formData,
 				{
 					headers: {
 						"Content-Type": "application/json",
@@ -59,14 +47,12 @@ const useSection = () => {
 		}
 	};
 
-	const updateOneBySectionReference = async (data: {
-		id: string | null | undefined;
-		title: string;
-	}) => {
+	const getAllByCourseReference = async (
+		courseReference: string | undefined
+	) => {
 		try {
-			const response = await sectionInstance.patch(
-				"/update-one-by-id",
-				data,
+			const response = await assignmentInstance.get(
+				`/get-all-by-course-reference/${courseReference}`,
 				{
 					headers: {
 						"Content-Type": "application/json",
@@ -80,10 +66,10 @@ const useSection = () => {
 		}
 	};
 
-	const deleteOneBySectionReference = async (id: string) => {
+	const getOneByCourseReference = async (data: string | null | undefined) => {
 		try {
-			const response = await sectionInstance.delete(
-				`/delete-one-by-id/${id}`,
+			const response = await assignmentInstance.get(
+				`/get-one-by-course-reference/${data}`,
 				{
 					headers: {
 						"Content-Type": "application/json",
@@ -98,11 +84,10 @@ const useSection = () => {
 	};
 
 	return {
-		createSection,
+		createAssignment,
 		getAllByCourseReference,
-		updateOneBySectionReference,
-		deleteOneBySectionReference,
+		getOneByCourseReference,
 	};
 };
 
-export default useSection;
+export default useAssignment;

@@ -11,6 +11,7 @@ type Props = {
 	variant?: "contained" | "outlined" | "text";
 	fullWidth?: boolean;
 	disabled?: boolean;
+	autoFocus?: boolean;
 	children: React.ReactNode;
 	color?:
 		| "inherit"
