@@ -11,7 +11,9 @@ import UserAuthentication from "./components/pages/user/UserAuthentication";
 import Dashboard from "./components/pages/instructor/Dashboard";
 import InstructorAuthentication from "./components/pages/instructor/InstructorAuthentication";
 import CourseCreation from "./components/pages/instructor/CourseCreation";
-import CourseInformation from "./components/pages/instructor/CourseInformation";
+import CourseAssignments from "./components/pages/instructor/CourseAssignments";
+import CourseCurriculum from "./components/pages/instructor/CourseCurriculum";
+import AssignmentCreation from "./components/pages/instructor/AssignmentCreation";
 
 const App = () => {
 	return (
@@ -19,20 +21,11 @@ const App = () => {
 			<CssBaseline />
 			<Router>
 				<Routes>
-					<Route
-						path="/"
-						element={<Home />}
-					/>
+					<Route path="/" element={<Home />} />
 
 					<Route element={<UserAuthentication />}>
-						<Route
-							path="/user/signup"
-							element={<SignUp />}
-						/>
-						<Route
-							path="/user/signin"
-							element={<SignIn />}
-						/>
+						<Route path="/user/signup" element={<SignUp />} />
+						<Route path="/user/signin" element={<SignIn />} />
 						<Route
 							path="/user/verify-email/:token/:id"
 							element={<VerifyEmail />}
@@ -57,15 +50,20 @@ const App = () => {
 							element={<CourseCreation />}
 						/>
 						<Route
-							path="/instructor/course/:courseReference"
-							element={<CourseInformation />}
+							path="/instructor/course/:courseReference/curriculum"
+							element={<CourseCurriculum />}
+						/>
+						<Route
+							path="/instructor/course/:courseReference/assignments"
+							element={<CourseAssignments />}
+						/>
+						<Route
+							path="/instructor/course/:courseReference/assignments/create"
+							element={<AssignmentCreation />}
 						/>
 					</Route>
 
-					<Route
-						path="*"
-						element={<PageNotFound />}
-					/>
+					<Route path="*" element={<PageNotFound />} />
 				</Routes>
 			</Router>
 		</>

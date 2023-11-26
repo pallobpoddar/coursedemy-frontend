@@ -2,45 +2,30 @@ import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import AtomTypography from "../atoms/AtomTypography";
 import AtomButton from "../atoms/AtomButton";
-import useCourse from "../../hooks/useCourse";
-import { IAuthStateProp } from "../../interfaces/stateInterface";
+import useAssignment from "../../hooks/useAssignment";
 import IMAGE_URL from "../../constants/imageURLs";
-import { Course } from "../../interfaces/courseInterface";
+import { Assignment } from "../../interfaces/assignmentInterface";
 import AtomSkeleton from "../atoms/AtomSkeleton";
 
-const InstructorDashboardCourseList = () => {
-	const DrawerHeader = styled("div")(({ theme }) => ({
-		display: "flex",
-		alignItems: "center",
-		justifyContent: "flex-end",
-		padding: theme.spacing(0, 1),
-		...theme.mixins.toolbar,
-	}));
+const AssignmentBox = () => {
+	const { getAllByCourseReference } = useAssignment();
 
-	const { getAllByInstructorReference } = useCourse();
+	const { courseReference } = useParams();
 
-	const instructorReference = useSelector(
-		(state: IAuthStateProp) => state.auth?.instructorReference?._id
-	);
-
-	const [courses, setCourses] = useState<Course[]>([]);
+	const [assignments, setAssignments] = useState<Assignment[]>([]);
 	const [showSkeleton, setShowSkeleton] = useState(true);
 
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const getCoursesFromApi = async () => {
+		const getAssignmentsFromApi = async () => {
 			try {
-				const result = await getAllByInstructorReference(
-					instructorReference
-				);
-				setCourses(result.data.result);
+				const result = await getAllByCourseReference(courseReference);
+				setAssignments(result.data.result);
 			} catch (error) {
 				console.error("Error setting data:", error);
 			} finally {
@@ -48,21 +33,23 @@ const InstructorDashboardCourseList = () => {
 			}
 		};
 
-		getCoursesFromApi();
+		getAssignmentsFromApi();
 	}, []);
 
-	const handleCardClick = (course: string) => {
-		navigate(`/instructor/course/${course}/curriculum`);
+	const handleCardClick = (assignment: string) => {
+		navigate(
+			`/instructor/course/${courseReference}/assignments/${assignment}`
+		);
 	};
 
 	return (
 		<Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-			<DrawerHeader />
 			<Container maxWidth="xl">
 				<Card
 					variant="outlined"
 					square
 					sx={{
+						mt: 10,
 						mb: 3,
 						width: "100%",
 						height: "20vh",
@@ -73,13 +60,15 @@ const InstructorDashboardCourseList = () => {
 					<Grid container spacing={2}>
 						<Grid item xs={6} textAlign="center">
 							<AtomTypography component="p" variant="body1">
-								Jump Into Course Creation
+								Jump Into Assignment Creation
 							</AtomTypography>
 						</Grid>
 						<Grid item xs textAlign="center">
-							<Link to="/instructor/course/create">
+							<Link
+								to={`/instructor/course/${courseReference}/assignments/create`}
+							>
 								<AtomButton variant="contained">
-									Create Your Course
+									Create Your Assignment
 								</AtomButton>
 							</Link>
 						</Grid>
@@ -121,12 +110,12 @@ const InstructorDashboardCourseList = () => {
 						</Box>
 					</Box>
 				)}
-				{courses.map((course, index) => (
+				{assignments.map((assignment, index) => (
 					<Card
 						key={index}
 						variant="outlined"
 						square
-						onClick={() => handleCardClick(course._id)}
+						onClick={() => handleCardClick(assignment._id)}
 						sx={{
 							mb: 3,
 							width: "100%",
@@ -149,7 +138,7 @@ const InstructorDashboardCourseList = () => {
 							width="40%"
 							display="flex"
 							flexDirection="column"
-							justifyContent="space-between"
+							justifyContent="center"
 							m={2}
 						>
 							<AtomTypography
@@ -157,14 +146,7 @@ const InstructorDashboardCourseList = () => {
 								variant="body2"
 								sx={{ fontWeight: "bold" }}
 							>
-								{course.title}
-							</AtomTypography>
-							<AtomTypography
-								component="p"
-								variant="body1"
-								sx={{ fontWeight: "bold" }}
-							>
-								{course.isApproved ? "Published" : "Draft"}
+								{assignment.title}
 							</AtomTypography>
 						</Box>
 						<Box
@@ -179,7 +161,7 @@ const InstructorDashboardCourseList = () => {
 								color="primary"
 								sx={{ fontWeight: "bold" }}
 							>
-								Finish your course
+								Finish your assignment
 							</AtomTypography>
 						</Box>
 					</Card>
@@ -189,4 +171,4 @@ const InstructorDashboardCourseList = () => {
 	);
 };
 
-export default InstructorDashboardCourseList;
+export default AssignmentBox;
