@@ -11,7 +11,7 @@ import IMAGE_URL from "../../constants/imageURLs";
 import { Assignment } from "../../interfaces/assignmentInterface";
 import AtomSkeleton from "../atoms/AtomSkeleton";
 
-const AssignmentBox = () => {
+const AssignmentDashboard = () => {
 	const { getAllByCourseReference } = useAssignment();
 
 	const { courseReference } = useParams();
@@ -37,13 +37,13 @@ const AssignmentBox = () => {
 	}, []);
 
 	const handleCardClick = (assignment: string) => {
-		navigate(
-			`/instructor/course/${courseReference}/assignments/${assignment}`
-		);
+		navigate(`/instructor/course/${courseReference}/assignments/${assignment}`);
 	};
 
 	return (
-		<Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+		<Box
+			component="main"
+			sx={{ flexGrow: 1, p: 3 }}>
 			<Container maxWidth="xl">
 				<Card
 					variant="outlined"
@@ -55,18 +55,26 @@ const AssignmentBox = () => {
 						height: "20vh",
 						display: "flex",
 						alignItems: "center",
-					}}
-				>
-					<Grid container spacing={2}>
-						<Grid item xs={6} textAlign="center">
-							<AtomTypography component="p" variant="body1">
+					}}>
+					<Grid
+						container
+						spacing={2}>
+						<Grid
+							item
+							xs={6}
+							textAlign="center">
+							<AtomTypography
+								component="p"
+								variant="body1">
 								Jump Into Assignment Creation
 							</AtomTypography>
 						</Grid>
-						<Grid item xs textAlign="center">
+						<Grid
+							item
+							xs
+							textAlign="center">
 							<Link
-								to={`/instructor/course/${courseReference}/assignments/create`}
-							>
+								to={`/instructor/course/${courseReference}/assignments/create`}>
 								<AtomButton variant="contained">
 									Create Your Assignment
 								</AtomButton>
@@ -75,7 +83,10 @@ const AssignmentBox = () => {
 					</Grid>
 				</Card>
 				{showSkeleton && (
-					<Box width="100%" height="20vh" display="flex">
+					<Box
+						width="100%"
+						height="20vh"
+						display="flex">
 						<AtomSkeleton
 							variant="rectangular"
 							animation="wave"
@@ -87,9 +98,11 @@ const AssignmentBox = () => {
 							display="flex"
 							flexDirection="column"
 							justifyContent="space-between"
-							m={2}
-						>
-							<AtomSkeleton variant="text" animation="wave" />
+							m={2}>
+							<AtomSkeleton
+								variant="text"
+								animation="wave"
+							/>
 							<AtomSkeleton
 								variant="text"
 								animation="wave"
@@ -100,8 +113,7 @@ const AssignmentBox = () => {
 							width="50%"
 							display="flex"
 							alignItems="center"
-							justifyContent="center"
-						>
+							justifyContent="center">
 							<AtomSkeleton
 								variant="text"
 								animation="wave"
@@ -126,8 +138,7 @@ const AssignmentBox = () => {
 								cursor: "pointer",
 								boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
 							},
-						}}
-					>
+						}}>
 						<img
 							src={IMAGE_URL.INSTRUCTOR_DASHBOARD_DECORATION}
 							width="10%"
@@ -139,13 +150,11 @@ const AssignmentBox = () => {
 							display="flex"
 							flexDirection="column"
 							justifyContent="center"
-							m={2}
-						>
+							m={2}>
 							<AtomTypography
 								component="p"
 								variant="body2"
-								sx={{ fontWeight: "bold" }}
-							>
+								sx={{ fontWeight: "bold" }}>
 								{assignment.title}
 							</AtomTypography>
 						</Box>
@@ -153,14 +162,12 @@ const AssignmentBox = () => {
 							width="50%"
 							display="flex"
 							alignItems="center"
-							justifyContent="center"
-						>
+							justifyContent="center">
 							<AtomTypography
 								component="p"
 								variant="body1"
 								color="primary"
-								sx={{ fontWeight: "bold" }}
-							>
+								sx={{ fontWeight: "bold" }}>
 								Finish your assignment
 							</AtomTypography>
 						</Box>
@@ -171,4 +178,4 @@ const AssignmentBox = () => {
 	);
 };
 
-export default AssignmentBox;
+export default AssignmentDashboard;

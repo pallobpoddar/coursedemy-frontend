@@ -52,8 +52,7 @@ const ClippedDrawer = () => {
 					backgroundColor: "#ffffff",
 					boxShadow: "none",
 					borderBottom: "0.5px solid #e5e5e5",
-				}}
-			>
+				}}>
 				<Toolbar>
 					<ArrowBackIosNewOutlinedIcon
 						color="primary"
@@ -62,14 +61,12 @@ const ClippedDrawer = () => {
 					/>
 					<Link
 						to="/instructor/dashboard"
-						style={{ textDecoration: "none" }}
-					>
+						style={{ textDecoration: "none" }}>
 						<AtomTypography
 							variant="body1"
 							component="div"
 							color="primary"
-							sx={{ mr: 5 }}
-						>
+							sx={{ mr: 5 }}>
 							Back to courses
 						</AtomTypography>
 					</Link>
@@ -77,8 +74,7 @@ const ClippedDrawer = () => {
 						variant="body1"
 						component="div"
 						color="primary"
-						sx={{ mr: 5 }}
-					>
+						sx={{ mr: 5 }}>
 						{course.title}
 					</AtomTypography>
 					<AtomButton variant="text">
@@ -95,21 +91,21 @@ const ClippedDrawer = () => {
 						width: drawerWidth,
 						boxSizing: "border-box",
 					},
-				}}
-			>
+				}}>
 				<Toolbar sx={{ mt: "30%" }} />
 				<Box sx={{ overflow: "auto" }}>
 					<List>
-						{["Curriculum", "Assignments", "Quizzes"].map(
+						{["Curriculum", "Assignments", "Quizzes", "Landing-Page"].map(
 							(text, _) => (
-								<ListItem key={text} disablePadding>
+								<ListItem
+									key={text}
+									disablePadding>
 									<Link
 										to={`/instructor/course/${courseReference}/${text.toLowerCase()}`}
 										style={{
 											textDecoration: "none",
 											color: "#1976D2",
-										}}
-									>
+										}}>
 										<ListItemButton>
 											<ListItemIcon>
 												<CircleOutlinedIcon fontSize="small" />

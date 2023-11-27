@@ -81,7 +81,35 @@ const useCourse = () => {
 		}
 	};
 
-	return { createCourse, getAllByInstructorReference, getOneByCourseReference };
+	const updateOneById = async (formData: {
+		// courseReference: string | undefined;
+		// title?: String;
+		// categoryReference?: String | null;
+		[k: string]: string | String | null | undefined;
+	}) => {
+		try {
+			const response = await courseInstance.patch(
+				"/update-one-by-id",
+				formData,
+				{
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			return response.data;
+		} catch (error) {
+			return { error: error };
+		}
+	};
+
+	return {
+		createCourse,
+		getAllByInstructorReference,
+		getOneByCourseReference,
+		updateOneById,
+	};
 };
 
 export default useCourse;

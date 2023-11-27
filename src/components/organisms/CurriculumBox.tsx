@@ -176,9 +176,7 @@ const CurriculumBox = () => {
 	};
 
 	const handleSectionTitleEditButtonOnClick = (id: string | null) => {
-		setIsSectionTitleEditable((prevButton) =>
-			prevButton === id ? null : id
-		);
+		setIsSectionTitleEditable((prevButton) => (prevButton === id ? null : id));
 	};
 
 	const handleSectionTitleDeleteButtonOnClick = (id: string | null) => {
@@ -227,9 +225,7 @@ const CurriculumBox = () => {
 	};
 
 	const handleLectureTitleEditButtonOnClick = (id: string | null) => {
-		setIsLectureTitleEditable((prevButton) =>
-			prevButton === id ? null : id
-		);
+		setIsLectureTitleEditable((prevButton) => (prevButton === id ? null : id));
 	};
 
 	const handleLectureTitleDeleteButtonOnClick = (id: string | null) => {
@@ -351,15 +347,16 @@ const CurriculumBox = () => {
 	let sectionCounter = 0;
 
 	return (
-		<Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+		<Box
+			component="main"
+			sx={{ flexGrow: 1, p: 3 }}>
 			<Toolbar />
 			<Paper
 				elevation={3}
 				sx={{
 					width: "100%",
 					minHeight: "100vh",
-				}}
-			>
+				}}>
 				<Box
 					sx={{
 						width: "100%",
@@ -368,24 +365,32 @@ const CurriculumBox = () => {
 						paddingLeft: "40px",
 						display: "flex",
 						alignItems: "center",
-					}}
-				>
-					<AtomTypography component="h1" variant="h5">
+					}}>
+					<AtomTypography
+						component="h1"
+						variant="h5">
 						Curriculum
 					</AtomTypography>
 				</Box>
 
-				<Box p={3} display="flex" flexDirection="column" gap="30px">
-					<AtomTypography component="p" variant="body1">
-						Start putting together your course by creating sections,
-						lectures and practice (quizzes, coding exercises and
-						assignments). Use your course outline to structure your
-						content and label your sections and lectures clearly. If
-						you're intending to offer your course for free, the
-						total length of video content must be less than 2 hours.
+				<Box
+					p={3}
+					display="flex"
+					flexDirection="column"
+					gap="30px">
+					<AtomTypography
+						component="p"
+						variant="body1">
+						Start putting together your course by creating sections, lectures
+						and practice (quizzes, coding exercises and assignments). Use your
+						course outline to structure your content and label your sections and
+						lectures clearly. If you're intending to offer your course for free,
+						the total length of video content must be less than 2 hours.
 					</AtomTypography>
 					{renderCounter === 1 ? (
-						<Box display="flex" justifyContent="center">
+						<Box
+							display="flex"
+							justifyContent="center">
 							<AtomCircularProgress color="inherit" />
 						</Box>
 					) : (
@@ -402,15 +407,12 @@ const CurriculumBox = () => {
 												flexDirection: "column",
 												border: "0.5px solid gray",
 												bgcolor: "#f6f7fa",
-											}}
-										>
-											{isSectionTitleEditable ===
-											section._id ? (
+											}}>
+											{isSectionTitleEditable === section._id ? (
 												<>
 													<Box
 														display="flex"
-														alignItems="center"
-													>
+														alignItems="center">
 														<AtomTypography
 															component="p"
 															variant="body1"
@@ -418,32 +420,19 @@ const CurriculumBox = () => {
 																width: "10%",
 																mt: 3,
 																ml: 1,
-															}}
-														>
-															<strong>
-																Section{" "}
-																{
-																	(sectionCounter += 1)
-																}
-																:
-															</strong>
+															}}>
+															<strong>Section {(sectionCounter += 1)}:</strong>
 														</AtomTypography>
 														<MoleculeTextField
 															id="section-title-edit"
 															variant="outlined"
 															fullWidth
 															defaultValue={
-																sectionData.data
-																	?._id ===
-																section._id
-																	? sectionData
-																			.data
-																			.title
+																sectionData.data?._id === section._id
+																	? sectionData.data.title
 																	: section.title
 															}
-															onChange={
-																handleTextFieldSectionTitleChange
-															}
+															onChange={handleTextFieldSectionTitleChange}
 															sx={{
 																mt: 4,
 																mr: 1,
@@ -455,17 +444,13 @@ const CurriculumBox = () => {
 													<Box
 														display="flex"
 														justifyContent="flex-end"
-														mr={1}
-													>
+														mr={1}>
 														<AtomButton
 															variant="text"
 															size="small"
 															onClick={() =>
-																handleSectionTitleEditButtonOnClick(
-																	null
-																)
-															}
-														>
+																handleSectionTitleEditButtonOnClick(null)
+															}>
 															Cancel
 														</AtomButton>
 														<AtomButton
@@ -477,8 +462,7 @@ const CurriculumBox = () => {
 																	section.title
 																)
 															}
-															sx={{ ml: 2 }}
-														>
+															sx={{ ml: 2 }}>
 															{showCircularProgress ? (
 																<AtomCircularProgress
 																	color="inherit"
@@ -499,12 +483,8 @@ const CurriculumBox = () => {
 														ml: 1,
 														display: "flex",
 														alignItems: "center",
-													}}
-												>
-													<strong>
-														Section{" "}
-														{(sectionCounter += 1)}:
-													</strong>{" "}
+													}}>
+													<strong>Section {(sectionCounter += 1)}:</strong>{" "}
 													<InsertDriveFileOutlinedIcon
 														sx={{
 															fontSize: "inherit",
@@ -512,22 +492,17 @@ const CurriculumBox = () => {
 															mr: 1,
 														}}
 													/>
-													{sectionData.data?._id ===
-													section._id
+													{sectionData.data?._id === section._id
 														? sectionData.data.title
 														: section.title}
 													<AtomIconButton
 														color="inherit"
 														onClick={() =>
-															handleSectionTitleEditButtonOnClick(
-																section._id
-															)
-														}
-													>
+															handleSectionTitleEditButtonOnClick(section._id)
+														}>
 														<EditIcon
 															sx={{
-																fontSize:
-																	"15px",
+																fontSize: "15px",
 																ml: 1,
 															}}
 														/>
@@ -535,419 +510,303 @@ const CurriculumBox = () => {
 													<AtomIconButton
 														color="inherit"
 														onClick={() =>
-															handleSectionTitleDeleteButtonOnClick(
-																section._id
-															)
-														}
-													>
+															handleSectionTitleDeleteButtonOnClick(section._id)
+														}>
 														<DeleteIcon
 															sx={{
-																fontSize:
-																	"15px",
+																fontSize: "15px",
 															}}
 														/>
 													</AtomIconButton>
 												</AtomTypography>
 											)}
 
-											{section.lectures.map(
-												(lecture, index) => (
-													<Fragment key={index}>
-														{isLecturePanelVisible !==
-															lecture._id && (
-															<Box
-																mt={4}
-																mr={1}
-																mb={1}
-																ml={6}
-																border="0.5px solid gray"
-																bgcolor="#fff"
-															>
-																{isLectureTitleEditable ===
-																lecture._id ? (
+											{section.lectures.map((lecture, index) => (
+												<Fragment key={index}>
+													{isLecturePanelVisible !== lecture._id && (
+														<Box
+															mt={4}
+															mr={1}
+															mb={1}
+															ml={6}
+															border="0.5px solid gray"
+															bgcolor="#fff">
+															{isLectureTitleEditable === lecture._id ? (
+																<Box>
+																	<Box
+																		display="flex"
+																		alignItems="center">
+																		<AtomTypography
+																			component="p"
+																			variant="body1"
+																			sx={{
+																				width: "10%",
+																				mt: 3,
+																				ml: 1,
+																			}}>
+																			<strong>
+																				Lecture {(lectureCounter += 1)}:
+																			</strong>
+																		</AtomTypography>
+																		<MoleculeTextField
+																			id="lecture-title-edit"
+																			variant="outlined"
+																			fullWidth
+																			defaultValue={
+																				lectureData.data?._id === lecture._id
+																					? lectureData.data?.title
+																					: lecture.title
+																			}
+																			onChange={
+																				handleTextFieldLectureTitleChange
+																			}
+																			sx={{
+																				mt: 4,
+																				mr: 1,
+																				mb: 2,
+																				bgcolor: "#fff",
+																			}}
+																		/>
+																	</Box>
+																	<Box
+																		display="flex"
+																		justifyContent="flex-end"
+																		mr={1}
+																		mb={1}>
+																		<AtomButton
+																			variant="text"
+																			size="small"
+																			onClick={() =>
+																				handleLectureTitleEditButtonOnClick(
+																					null
+																				)
+																			}>
+																			Cancel
+																		</AtomButton>
+																		<AtomButton
+																			variant="contained"
+																			size="small"
+																			onClick={() =>
+																				handleLectureTitleSaveButtonOnClick(
+																					lecture._id,
+																					lecture.title
+																				)
+																			}
+																			sx={{
+																				ml: 2,
+																			}}>
+																			{showCircularProgress ? (
+																				<AtomCircularProgress
+																					color="inherit"
+																					size={25}
+																				/>
+																			) : (
+																				<>Save</>
+																			)}
+																		</AtomButton>
+																	</Box>
+																</Box>
+															) : (
+																<Box
+																	p={1}
+																	display="flex"
+																	alignItems="center"
+																	justifyContent="space-between">
 																	<Box>
-																		<Box
-																			display="flex"
-																			alignItems="center"
-																		>
-																			<AtomTypography
-																				component="p"
-																				variant="body1"
+																		<CheckCircleIcon
+																			sx={{
+																				fontSize: "inherit",
+																				mr: 1,
+																			}}
+																		/>
+																		Lecture {(lectureCounter += 1)}
+																		:
+																		<InsertDriveFileOutlinedIcon
+																			sx={{
+																				fontSize: "inherit",
+																				ml: 1,
+																				mr: 1,
+																			}}
+																		/>
+																		{lectureData.data?._id === lecture._id
+																			? lectureData.data?.title
+																			: lecture.title}
+																		<AtomIconButton
+																			color="inherit"
+																			onClick={() =>
+																				handleLectureTitleEditButtonOnClick(
+																					lecture._id
+																				)
+																			}>
+																			<EditIcon
 																				sx={{
-																					width: "10%",
-																					mt: 3,
+																					fontSize: "15px",
 																					ml: 1,
 																				}}
-																			>
-																				<strong>
-																					Lecture{" "}
-																					{
-																						(lectureCounter += 1)
-																					}
-
-																					:
-																				</strong>
-																			</AtomTypography>
-																			<MoleculeTextField
-																				id="lecture-title-edit"
-																				variant="outlined"
-																				fullWidth
-																				defaultValue={
-																					lectureData
-																						.data
-																						?._id ===
+																			/>
+																		</AtomIconButton>
+																		<AtomIconButton
+																			color="inherit"
+																			onClick={() =>
+																				handleLectureTitleDeleteButtonOnClick(
 																					lecture._id
-																						? lectureData
-																								.data
-																								?.title
-																						: lecture.title
-																				}
-																				onChange={
-																					handleTextFieldLectureTitleChange
-																				}
+																				)
+																			}>
+																			<DeleteIcon
 																				sx={{
-																					mt: 4,
-																					mr: 1,
-																					mb: 2,
-																					bgcolor:
-																						"#fff",
+																					fontSize: "15px",
 																				}}
 																			/>
-																		</Box>
-																		<Box
-																			display="flex"
-																			justifyContent="flex-end"
-																			mr={
-																				1
-																			}
-																			mb={
-																				1
-																			}
-																		>
-																			<AtomButton
-																				variant="text"
-																				size="small"
+																		</AtomIconButton>
+																	</Box>
+																	<Box mr={4}>
+																		{lecture.content ? (
+																			<AtomIconButton
 																				onClick={() =>
-																					handleLectureTitleEditButtonOnClick(
-																						null
-																					)
-																				}
-																			>
-																				Cancel
-																			</AtomButton>
+																					handleContentButtonClick(lecture._id)
+																				}>
+																				{showFileUploadDiv === lecture._id ? (
+																					<ExpandLessIcon />
+																				) : (
+																					<ExpandMoreIcon />
+																				)}
+																			</AtomIconButton>
+																		) : (
 																			<AtomButton
-																				variant="contained"
-																				size="small"
+																				variant="outlined"
+																				color="inherit"
 																				onClick={() =>
-																					handleLectureTitleSaveButtonOnClick(
-																						lecture._id,
-																						lecture.title
-																					)
-																				}
-																				sx={{
-																					ml: 2,
-																				}}
-																			>
-																				{showCircularProgress ? (
-																					<AtomCircularProgress
-																						color="inherit"
-																						size={
-																							25
-																						}
+																					handleContentButtonClick(lecture._id)
+																				}>
+																				{showFileUploadDiv === lecture._id ? (
+																					<CloseIcon
+																						sx={{
+																							mr: 1,
+																						}}
 																					/>
 																				) : (
-																					<>
-																						Save
-																					</>
+																					<AddIcon
+																						sx={{
+																							mr: 1,
+																						}}
+																					/>
 																				)}
+																				<AtomTypography
+																					component="p"
+																					sx={{
+																						textTransform: "none",
+																					}}>
+																					Content
+																				</AtomTypography>
 																			</AtomButton>
-																		</Box>
+																		)}
 																	</Box>
-																) : (
-																	<Box
-																		p={1}
-																		display="flex"
-																		alignItems="center"
-																		justifyContent="space-between"
-																	>
-																		<Box>
-																			<CheckCircleIcon
+																</Box>
+															)}
+															{showFileUploadDiv === lecture._id && (
+																<Box
+																	mt={2}
+																	display="flex"
+																	alignItems="center"
+																	justifyContent="space-between"
+																	borderTop="0.5px solid gray"
+																	p={1}>
+																	<Box paddingLeft={2}>
+																		<AtomTypography
+																			component="p"
+																			variant="body1">
+																			{lecture.content
+																				? extractFilename(lecture.content)
+																				: selectedFile
+																				? selectedFile.name
+																				: "No file selected"}
+																		</AtomTypography>
+																	</Box>
+																	{!lecture.content && (
+																		<Box display="flex">
+																			<Box
+																				borderLeft="0.5px solid gray"
+																				mr={1}
 																				sx={{
-																					fontSize:
-																						"inherit",
-																					mr: 1,
-																				}}
-																			/>
-																			Lecture{" "}
-																			{
-																				(lectureCounter += 1)
-																			}
-																			:
-																			<InsertDriveFileOutlinedIcon
-																				sx={{
-																					fontSize:
-																						"inherit",
-																					ml: 1,
-																					mr: 1,
-																				}}
-																			/>
-																			{lectureData
-																				.data
-																				?._id ===
-																			lecture._id
-																				? lectureData
-																						.data
-																						?.title
-																				: lecture.title}
-																			<AtomIconButton
-																				color="inherit"
-																				onClick={() =>
-																					handleLectureTitleEditButtonOnClick(
-																						lecture._id
-																					)
-																				}
-																			>
-																				<EditIcon
-																					sx={{
-																						fontSize:
-																							"15px",
-																						ml: 1,
-																					}}
-																				/>
-																			</AtomIconButton>
-																			<AtomIconButton
-																				color="inherit"
-																				onClick={() =>
-																					handleLectureTitleDeleteButtonOnClick(
-																						lecture._id
-																					)
-																				}
-																			>
-																				<DeleteIcon
-																					sx={{
-																						fontSize:
-																							"15px",
-																					}}
-																				/>
-																			</AtomIconButton>
-																		</Box>
-																		<Box
-																			mr={
-																				4
-																			}
-																		>
-																			{!(
-																				lecture.content ===
-																					null &&
-																				lectureData
-																					.data
-																					?.content ===
-																					""
-																			) ? (
-																				<AtomIconButton
-																					onClick={() =>
-																						handleContentButtonClick(
-																							lecture._id
-																						)
-																					}
-																				>
-																					{showFileUploadDiv ===
-																					lecture._id ? (
-																						<ExpandLessIcon />
-																					) : (
-																						<ExpandMoreIcon />
-																					)}
-																				</AtomIconButton>
-																			) : (
+																					"&:hover": {
+																						bgcolor: "#d2d5d8",
+																					},
+																				}}>
+																				<label htmlFor="file-input">
+																					<AtomButton
+																						variant="text"
+																						color="inherit"
+																						component="span">
+																						Select file
+																						<Input
+																							id="file-input"
+																							type="file"
+																							style={{
+																								display: "none",
+																							}}
+																							onChange={handleFileChange}
+																						/>
+																					</AtomButton>
+																				</label>
+																			</Box>
+																			<Box>
 																				<AtomButton
-																					variant="outlined"
-																					color="inherit"
+																					variant="contained"
+																					disabled={selectedFile ? false : true}
 																					onClick={() =>
-																						handleContentButtonClick(
-																							lecture._id
-																						)
+																						handleSave(lecture._id)
 																					}
-																				>
-																					{showFileUploadDiv ===
-																					lecture._id ? (
-																						<CloseIcon
-																							sx={{
-																								mr: 1,
-																							}}
+																					sx={{
+																						mr: 5,
+																						ml: 2,
+																					}}>
+																					{showCircularProgress === true ? (
+																						<AtomCircularProgress
+																							color="inherit"
+																							size={25}
 																						/>
 																					) : (
-																						<AddIcon
-																							sx={{
-																								mr: 1,
-																							}}
-																						/>
+																						<>Save</>
 																					)}
-																					<AtomTypography
-																						component="p"
-																						sx={{
-																							textTransform:
-																								"none",
-																						}}
-																					>
-																						Content
-																					</AtomTypography>
 																				</AtomButton>
-																			)}
+																			</Box>
 																		</Box>
-																	</Box>
-																)}
-																{showFileUploadDiv ===
-																	lecture._id && (
-																	<Box
-																		mt={2}
-																		display="flex"
-																		alignItems="center"
-																		justifyContent="space-between"
-																		borderTop="0.5px solid gray"
-																		p={1}
-																	>
-																		<Box
-																			paddingLeft={
-																				2
-																			}
-																		>
-																			<AtomTypography
-																				component="p"
-																				variant="body1"
-																			>
-																				{lecture.content
-																					? extractFilename(
-																							lecture.content
-																					  )
-																					: selectedFile
-																					? selectedFile.name
-																					: "No file selected"}
-																			</AtomTypography>
-																		</Box>
-																		{!lecture.content &&
-																			lectureData.message ===
-																				"" && (
-																				<Box display="flex">
-																					<Box
-																						borderLeft="0.5px solid gray"
-																						mr={
-																							1
-																						}
-																						sx={{
-																							"&:hover":
-																								{
-																									bgcolor:
-																										"#d2d5d8",
-																								},
-																						}}
-																					>
-																						<label htmlFor="file-input">
-																							<AtomButton
-																								variant="text"
-																								color="inherit"
-																								component="span"
-																							>
-																								Select
-																								file
-																								<Input
-																									id="file-input"
-																									type="file"
-																									style={{
-																										display:
-																											"none",
-																									}}
-																									onChange={
-																										handleFileChange
-																									}
-																								/>
-																							</AtomButton>
-																						</label>
-																					</Box>
-																					<Box>
-																						<AtomButton
-																							variant="contained"
-																							disabled={
-																								selectedFile
-																									? false
-																									: true
-																							}
-																							onClick={() =>
-																								handleSave(
-																									lecture._id
-																								)
-																							}
-																							sx={{
-																								mr: 5,
-																								ml: 2,
-																							}}
-																						>
-																							{showCircularProgress ===
-																							true ? (
-																								<AtomCircularProgress
-																									color="inherit"
-																									size={
-																										25
-																									}
-																								/>
-																							) : (
-																								<>
-																									Save
-																								</>
-																							)}
-																						</AtomButton>
-																					</Box>
-																				</Box>
-																			)}
-																	</Box>
-																)}
-																<MoleculeAlertDialog
-																	open={
-																		isLectureAlertDialogVisible ===
+																	)}
+																</Box>
+															)}
+															<MoleculeAlertDialog
+																open={
+																	isLectureAlertDialogVisible === lecture._id
+																}
+																onClose={handleLectureAlertDialogClose}
+																onOKButtonClick={() =>
+																	handleLectureAlertDialogOKButtonOnClick(
 																		lecture._id
-																	}
-																	onClose={
-																		handleLectureAlertDialogClose
-																	}
-																	onOKButtonClick={() =>
-																		handleLectureAlertDialogOKButtonOnClick(
-																			lecture._id
-																		)
-																	}
-																/>
-															</Box>
-														)}
-													</Fragment>
-												)
-											)}
+																	)
+																}
+															/>
+														</Box>
+													)}
+												</Fragment>
+											))}
 											<MoleculeAlertDialog
-												open={
-													isSectionAlertDialogVisible ===
-													section._id
-												}
-												onClose={
-													handleSectionAlertDialogClose
-												}
+												open={isSectionAlertDialogVisible === section._id}
+												onClose={handleSectionAlertDialogClose}
 												onOKButtonClick={() =>
-													handleSectionAlertDialogOKButtonOnClick(
-														section._id
-													)
+													handleSectionAlertDialogOKButtonOnClick(section._id)
 												}
 											/>
-											{isAddLectureButtonVisible ===
-												null && (
+											{isAddLectureButtonVisible === null && (
 												<AtomButton
 													variant="outlined"
 													color="inherit"
 													onClick={() =>
-														handlePlusLectureButtonOnClick(
-															section._id
-														)
+														handlePlusLectureButtonOnClick(section._id)
 													}
 													sx={{
 														width: "100px",
 														m: 2,
-													}}
-												>
+													}}>
 													<AddIcon
 														sx={{
 															mr: 1,
@@ -956,17 +815,14 @@ const CurriculumBox = () => {
 													<AtomTypography
 														component="p"
 														sx={{
-															textTransform:
-																"none",
-														}}
-													>
+															textTransform: "none",
+														}}>
 														Lecture
 													</AtomTypography>
 												</AtomButton>
 											)}
 
-											{isAddLectureButtonVisible ===
-												section._id && (
+											{isAddLectureButtonVisible === section._id && (
 												<Card
 													square
 													variant="outlined"
@@ -976,12 +832,10 @@ const CurriculumBox = () => {
 														flexDirection: "column",
 														border: "0.5px solid gray",
 														bgcolor: "#f6f7fa",
-													}}
-												>
+													}}>
 													<Box
 														display="flex"
-														alignItems="center"
-													>
+														alignItems="center">
 														<AtomTypography
 															component="p"
 															variant="body1"
@@ -989,20 +843,15 @@ const CurriculumBox = () => {
 																width: "10%",
 																mt: 3,
 																ml: 1,
-															}}
-														>
-															<strong>
-																New Lecture:
-															</strong>
+															}}>
+															<strong>New Lecture:</strong>
 														</AtomTypography>
 														<MoleculeTextField
 															id="section-title-edit"
 															variant="outlined"
 															fullWidth
 															placeholder="Enter a title"
-															onChange={
-																handleTextFieldLectureTitleChange
-															}
+															onChange={handleTextFieldLectureTitleChange}
 															sx={{
 																mt: 4,
 																mr: 1,
@@ -1016,15 +865,11 @@ const CurriculumBox = () => {
 														display="flex"
 														justifyContent="flex-end"
 														mr={1}
-														mb={1}
-													>
+														mb={1}>
 														<AtomButton
 															variant="text"
 															size="small"
-															onClick={
-																handleCancelLectureButtonOnClick
-															}
-														>
+															onClick={handleCancelLectureButtonOnClick}>
 															Cancel
 														</AtomButton>
 														<AtomButton
@@ -1036,8 +881,7 @@ const CurriculumBox = () => {
 																	textFieldLectureTitle
 																)
 															}
-															sx={{ ml: 2 }}
-														>
+															sx={{ ml: 2 }}>
 															{showCircularProgress ? (
 																<AtomCircularProgress
 																	color="inherit"
@@ -1059,8 +903,7 @@ const CurriculumBox = () => {
 									variant="outlined"
 									color="inherit"
 									onClick={handlePlusSectionButtonOnClick}
-									sx={{ width: "100px" }}
-								>
+									sx={{ width: "100px" }}>
 									<AddIcon
 										sx={{
 											mr: 1,
@@ -1070,8 +913,7 @@ const CurriculumBox = () => {
 										component="p"
 										sx={{
 											textTransform: "none",
-										}}
-									>
+										}}>
 										Section
 									</AtomTypography>
 								</AtomButton>
@@ -1087,9 +929,10 @@ const CurriculumBox = () => {
 										flexDirection: "column",
 										border: "0.5px solid gray",
 										bgcolor: "#f6f7fa",
-									}}
-								>
-									<Box display="flex" alignItems="center">
+									}}>
+									<Box
+										display="flex"
+										alignItems="center">
 										<AtomTypography
 											component="p"
 											variant="body1"
@@ -1097,8 +940,7 @@ const CurriculumBox = () => {
 												width: "10%",
 												mt: 3,
 												ml: 1,
-											}}
-										>
+											}}>
 											<strong>New Section:</strong>
 										</AtomTypography>
 										<MoleculeTextField
@@ -1106,9 +948,7 @@ const CurriculumBox = () => {
 											variant="outlined"
 											fullWidth
 											placeholder="Enter a title"
-											onChange={
-												handleTextFieldSectionTitleChange
-											}
+											onChange={handleTextFieldSectionTitleChange}
 											sx={{
 												mt: 4,
 												mr: 1,
@@ -1122,27 +962,20 @@ const CurriculumBox = () => {
 										display="flex"
 										justifyContent="flex-end"
 										mr={1}
-										mb={1}
-									>
+										mb={1}>
 										<AtomButton
 											variant="text"
 											size="small"
-											onClick={
-												handleCancelSectionButtonOnClick
-											}
-										>
+											onClick={handleCancelSectionButtonOnClick}>
 											Cancel
 										</AtomButton>
 										<AtomButton
 											variant="contained"
 											size="small"
 											onClick={() =>
-												handleAddSectionButtonOnClick(
-													textFieldSectionTitle
-												)
+												handleAddSectionButtonOnClick(textFieldSectionTitle)
 											}
-											sx={{ ml: 2 }}
-										>
+											sx={{ ml: 2 }}>
 											{showCircularProgress ? (
 												<AtomCircularProgress
 													color="inherit"
