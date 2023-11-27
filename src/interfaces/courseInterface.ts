@@ -4,4 +4,6 @@ export interface Course {
 	title: string;
 	isApproved: boolean;
 	categoryReference: string;
+	thumbnail?: string;
+	promoVideo?: string;
 }

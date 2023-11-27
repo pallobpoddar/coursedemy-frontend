@@ -26,21 +26,17 @@ const useAssignment = () => {
 	}
 
 	const createAssignment = async (formData: {
-		courseReference: string;
+		courseReference: string | undefined;
 		title: string;
-		content: string;
+		assignment: File | null;
 	}) => {
 		try {
-			const response = await assignmentInstance.post(
-				"/create",
-				formData,
-				{
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
-					},
-				}
-			);
+			const response = await assignmentInstance.post("/create", formData, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+					Authorization: `Bearer ${token}`,
+				},
+			});
 			return response.data;
 		} catch (error) {
 			return { error: error };

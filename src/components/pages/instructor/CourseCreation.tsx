@@ -6,7 +6,10 @@ import Container from "@mui/material/Container";
 const CourseCreation = () => {
 	return (
 		<Box>
-			<InstructorPageHeader />
+			<InstructorPageHeader
+				typography="Back to Courses"
+				link="/instructor/dashboard"
+			/>
 			<Box
 				sx={{
 					display: "flex",

@@ -1,14 +1,14 @@
 import Box from "@mui/material/Box";
 import ClippedDrawer from "../../organisms/ClippedDrawer";
-import AssignmentDashboard from "../../organisms/AssignmentDashboard";
+import LandingPageBox from "../../organisms/LandingPageBox";
 
-const CourseAssignments = () => {
+const CourseLandingPage = () => {
 	return (
 		<Box sx={{ display: "flex" }}>
 			<ClippedDrawer />
-			<AssignmentDashboard />
+			<LandingPageBox />
 		</Box>
 	);
 };
 
-export default CourseAssignments;
+export default CourseLandingPage;
