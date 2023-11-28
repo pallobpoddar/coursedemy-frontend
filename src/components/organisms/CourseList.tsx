@@ -7,53 +7,93 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import AtomTypography from "../atoms/AtomTypography";
 import AtomButton from "../atoms/AtomButton";
+import { useEffect, useState } from "react";
+import { Course } from "../../interfaces/courseInterface";
+import useCourse from "../../hooks/useCourse";
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+type Response = {
+	success: boolean;
+	message: string;
+	data?: Object;
+	errors?: string[];
+};
 
 const CourseList = () => {
+	const { getAll } = useCourse();
+
+	const [courses, setCourses] = useState<Course[]>([]);
+	const [response, setResponse] = useState<Response>({
+		success: false,
+		message: "",
+		data: {},
+		errors: [],
+	});
+
+	useEffect(() => {
+		const getCoursesFromApi = async () => {
+			try {
+				const result = await getAll();
+				setCourses(result.data);
+				setResponse(result);
+			} catch (error) {
+				console.error("Error setting data:", error);
+			}
+		};
+
+		getCoursesFromApi();
+	}, []);
+
 	return (
 		<>
-			<AtomTypography component="h2" variant="h5">
-				Recommended for you
-			</AtomTypography>
 			<Container sx={{ py: 8 }} maxWidth="md">
 				<Grid container spacing={4}>
-					{cards.map((card) => (
-						<Grid item key={card} xs={12} sm={6} md={4}>
-							<Card
-								sx={{
-									height: "100%",
-									display: "flex",
-									flexDirection: "column",
-								}}
-							>
-								<CardMedia
-									component="div"
-									sx={{
-										pt: "56.25%",
-									}}
-									image="https://source.unsplash.com/random?wallpapers"
-								/>
-								<CardContent sx={{ flexGrow: 1 }}>
-									<AtomTypography
-										gutterBottom
-										variant="h5"
-										component="h2"
+					{response.message !== "" && (
+						<>
+							{courses.map((course) => (
+								<Grid
+									item
+									key={course._id}
+									xs={12}
+									sm={6}
+									md={4}
+								>
+									<Card
+										sx={{
+											height: "100%",
+											display: "flex",
+											flexDirection: "column",
+										}}
 									>
-										Heading
-									</AtomTypography>
-									<Typography>
-										This is a media card. You can use this
-										section to describe the content.
-									</Typography>
-								</CardContent>
-								<CardActions>
-									<AtomButton size="small">View</AtomButton>
-									<AtomButton size="small">Edit</AtomButton>
-								</CardActions>
-							</Card>
-						</Grid>
-					))}
+										<CardMedia
+											component="div"
+											sx={{
+												pt: "56.25%",
+											}}
+											image={course.thumbnail}
+										/>
+										<CardContent sx={{ flexGrow: 1 }}>
+											<AtomTypography
+												gutterBottom
+												variant="h5"
+												component="h2"
+											>
+												{course.title}
+											</AtomTypography>
+											{/* <Typography>
+										{course.instructorReference}
+									</Typography> */}
+										</CardContent>
+										<CardActions>
+											<AtomButton size="small">
+												Add to cart
+											</AtomButton>
+											{/* <AtomButton size="small">Edit</AtomButton> */}
+										</CardActions>
+									</Card>
+								</Grid>
+							))}
+						</>
+					)}
 				</Grid>
 			</Container>
 		</>

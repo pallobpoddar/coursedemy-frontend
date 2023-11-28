@@ -31,12 +31,16 @@ const useAssignment = () => {
 		assignment: File | null;
 	}) => {
 		try {
-			const response = await assignmentInstance.post("/create", formData, {
-				headers: {
-					"Content-Type": "multipart/form-data",
-					Authorization: `Bearer ${token}`,
-				},
-			});
+			const response = await assignmentInstance.post(
+				"/create",
+				formData,
+				{
+					headers: {
+						"Content-Type": "multipart/form-data",
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
 			return response.data;
 		} catch (error) {
 			return { error: error };
@@ -79,10 +83,50 @@ const useAssignment = () => {
 		}
 	};
 
+	const updateOneById = async (formData: {
+		id: string | null | undefined;
+		assignment: File | null;
+	}) => {
+		try {
+			const response = await assignmentInstance.patch(
+				"/update-one-by-id",
+				formData,
+				{
+					headers: {
+						"Content-Type": "multipart/form-data",
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			return response.data;
+		} catch (error) {
+			return { error: error };
+		}
+	};
+
+	const deleteOneById = async (id: string | undefined) => {
+		try {
+			const response = await assignmentInstance.delete(
+				`/delete-one-by-id/${id}`,
+				{
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			return response.data;
+		} catch (error) {
+			return { error: error };
+		}
+	};
+
 	return {
 		createAssignment,
 		getAllByCourseReference,
 		getOneByCourseReference,
+		updateOneById,
+		deleteOneById,
 	};
 };
 
