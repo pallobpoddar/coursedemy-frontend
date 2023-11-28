@@ -6,7 +6,18 @@ const InstructorAuthentication = () => {
 	const instructorReference: string | null | undefined = useSelector(
 		(state: IAuthStateProp) => state.auth.instructorReference?._id
 	);
-	return <>{instructorReference ? <Outlet /> : <Navigate to="/" />}</>;
+	const adminReference: string | null | undefined = useSelector(
+		(state: IAuthStateProp) => state.auth.adminReference?._id
+	);
+	return (
+		<>
+			{instructorReference || adminReference ? (
+				<Outlet />
+			) : (
+				<Navigate to="/" />
+			)}
+		</>
+	);
 };
 
 export default InstructorAuthentication;

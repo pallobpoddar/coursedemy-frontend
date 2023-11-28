@@ -45,6 +45,20 @@ const useCourse = () => {
 		}
 	};
 
+	const getAll = async () => {
+		try {
+			const response = await courseInstance.get("/get-all", {
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+			});
+			return response.data;
+		} catch (error) {
+			return { error: error };
+		}
+	};
+
 	const getAllByInstructorReference = async (
 		data: string | null | undefined
 	) => {
@@ -82,9 +96,6 @@ const useCourse = () => {
 	};
 
 	const updateOneById = async (formData: {
-		// courseReference: string | undefined;
-		// title?: String;
-		// categoryReference?: String | null;
 		[k: string]: string | String | null | undefined;
 	}) => {
 		try {
@@ -104,11 +115,98 @@ const useCourse = () => {
 		}
 	};
 
+	const uploadThumbnail = async (formData: {
+		courseReference: string | undefined;
+		thumbnail: File | null;
+	}) => {
+		try {
+			const response = await courseInstance.patch(
+				"/upload-thumbnail",
+				formData,
+				{
+					headers: {
+						"Content-Type": "multipart/form-data",
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			return response.data;
+		} catch (error) {
+			return { error: error };
+		}
+	};
+
+	const uploadPromoVideo = async (formData: {
+		courseReference: string | undefined;
+		promoVideo: File | null;
+	}) => {
+		try {
+			const response = await courseInstance.patch(
+				"/upload-promo-video",
+				formData,
+				{
+					headers: {
+						"Content-Type": "multipart/form-data",
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			return response.data;
+		} catch (error) {
+			return { error: error };
+		}
+	};
+
+	const sendPublicationRequest = async (formData: {
+		courseReference: string | null | undefined;
+	}) => {
+		try {
+			const response = await courseInstance.post(
+				"/course-publication-request",
+				formData,
+				{
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			return response.data;
+		} catch (error) {
+			return { error: error };
+		}
+	};
+
+	const publishCourse = async (formData: {
+		courseReference: string | null | undefined;
+	}) => {
+		try {
+			const response = await courseInstance.post(
+				"/publish-course",
+				formData,
+				{
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			return response.data;
+		} catch (error) {
+			return { error: error };
+		}
+	};
+
 	return {
 		createCourse,
+		getAll,
 		getAllByInstructorReference,
 		getOneByCourseReference,
 		updateOneById,
+		uploadThumbnail,
+		uploadPromoVideo,
+		sendPublicationRequest,
+		publishCourse,
 	};
 };
 

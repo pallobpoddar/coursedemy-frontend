@@ -1,8 +1,8 @@
-import VerifyEmailSection from "../../organisms/VerifyEmailSection";
-import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import PublicationRequestSection from "../../organisms/PublicationRequestSection";
 
-const VerifyEmail = () => {
+const PublicationRequest = () => {
 	return (
 		<Box
 			sx={{
@@ -12,10 +12,10 @@ const VerifyEmail = () => {
 			}}
 		>
 			<Container component="main" maxWidth="xs">
-				<VerifyEmailSection />
+				<PublicationRequestSection />
 			</Container>
 		</Box>
 	);
 };
 
-export default VerifyEmail;
+export default PublicationRequest;
