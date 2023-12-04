@@ -1,1 +1,1 @@
-# coursedemy-frontend
+# skillbase-frontend
