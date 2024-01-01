@@ -7,9 +7,9 @@ import Toolbar from "@mui/material/Toolbar";
 import MenuItem from "@mui/material/MenuItem";
 import Popper from "@mui/material/Popper";
 import Fade from "@mui/material/Fade";
+import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MoreIcon from "@mui/icons-material/MoreVert";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AtomIconButton from "../atoms/AtomIconButton";
@@ -28,9 +28,8 @@ import AtomCircularProgress from "../atoms/AtomCircularProgress";
 
 const HomePageHeader = () => {
 	const [open, setOpen] = useState(false);
-	const [instructorPopper, setInstructorPopper] = useState<null | HTMLElement>(
-		null
-	);
+	const [instructorPopper, setInstructorPopper] =
+		useState<null | HTMLElement>(null);
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
@@ -44,14 +43,14 @@ const HomePageHeader = () => {
 	const menuId = "primary-search-account-menu";
 	const mobileMenuId = "primary-search-account-menu-mobile";
 
-	const handleMouseEnterTeachOnCoursedemy = (
+	const handleMouseEnterTeachOnSkillbase = (
 		event: React.MouseEvent<HTMLElement>
 	) => {
 		setInstructorPopper(event.currentTarget);
 		setOpen(true);
 	};
 
-	const handleMouseLeaveTeachOnCoursedemy = () => {
+	const handleMouseLeaveTeachOnSkillbase = () => {
 		setOpen(false);
 	};
 
@@ -129,116 +128,170 @@ const HomePageHeader = () => {
 				position="static"
 				sx={{
 					backgroundColor: "#ffffff",
-					boxShadow: "none",
-					borderBottom: "0.5px solid #e5e5e5",
-				}}>
-				<Toolbar>
-					<Link
-						to="/"
-						style={{ textDecoration: "none" }}>
+					boxShadow: "4px gray",
+				}}
+			>
+				<Toolbar
+					sx={{
+						gap: { xs: "none", sm: 10 },
+					}}
+				>
+					<AtomIconButton
+						size="large"
+						edge="start"
+						aria-label="open drawer"
+						aria-controls={mobileMenuId}
+						aria-haspopup="true"
+						onClick={handleMobileMenuOpen}
+						sx={{
+							display: { xs: "flex", sm: "none" },
+							color: "black",
+						}}
+					>
+						<MenuIcon />
+					</AtomIconButton>
+
+					<Link to="/" style={{ textDecoration: "none" }}>
 						<AtomTypography
-							variant="h6"
-							component="div"
+							variant="h5"
+							component="h1"
 							color="primary"
-							sx={{ display: { xs: "none", sm: "block" } }}>
-							Coursedemy
+						>
+							Skillbase
 						</AtomTypography>
 					</Link>
 
+					<AtomTypography
+						variant="body1"
+						component="p"
+						color="black"
+						sx={{ display: { xs: "none", sm: "block" } }}
+					>
+						Categories
+					</AtomTypography>
+
 					<Search>
 						<SearchIconWrapper>
-							<SearchIcon color="primary" />
+							<SearchIcon sx={{ color: "gray" }} />
 						</SearchIconWrapper>
 						<StyledInputBase
-							placeholder="Search…"
+							placeholder="Search for anything"
 							id="header-search"
 							inputProps={{ "aria-label": "search" }}
 						/>
 					</Search>
-					<Box sx={{ flexGrow: 1 }} />
-					<Box sx={{ display: { xs: "none", md: "flex" } }}>
+
+					{role && (
 						<AtomButton
 							variant="text"
-							onMouseEnter={handleMouseEnterTeachOnCoursedemy}
-							onMouseLeave={handleMouseLeaveTeachOnCoursedemy}>
-							{role === "learner" &&
-								instructorReference === null &&
-								"Teach on CourseDemy"}
+							onMouseEnter={handleMouseEnterTeachOnSkillbase}
+							onMouseLeave={handleMouseLeaveTeachOnSkillbase}
+							sx={{ textTransform: "none" }}
+						>
+							{role === "learner" && !instructorReference && (
+								<AtomTypography
+									variant="body1"
+									component="p"
+									color="black"
+									sx={{
+										display: { xs: "none", sm: "block" },
+									}}
+								>
+									Teach on Skillbase
+								</AtomTypography>
+							)}
 							<Link
 								to="/instructor/dashboard"
 								style={{
 									color: "#1976D2",
 									textDecoration: "none",
-								}}>
-								{role === "learner" &&
-									instructorReference !== null &&
-									"Instructor"}
+								}}
+							>
+								{instructorReference && "Instructor"}
 							</Link>
 						</AtomButton>
-						{role === "learner" && instructorReference === null && (
-							<Popper
-								id="teach-on-coursedemy-popper"
-								open={open}
-								anchorEl={instructorPopper}
-								onMouseEnter={handleMouseEnterPopper}
-								onMouseLeave={handleMouseLeavePopper}
-								transition
-								placement="bottom-end">
-								{({ TransitionProps }) => (
-									<Fade
-										{...TransitionProps}
-										timeout={350}>
-										<Box
-											sx={{
-												border: 1,
-												p: 1,
-												bgcolor: "background.paper",
-												width: "250px",
-												textAlign: "center",
-											}}>
-											Turn what you know into an opportunity and reach millions
-											around the world
-											<AtomButton
-												variant="contained"
-												fullWidth
-												sx={{ mt: 1 }}
-												onClick={handleOnClickTeachOnCoursedemyButton}>
-												{showCircularProgress === true ? (
-													<AtomCircularProgress
-														color="inherit"
-														size={25}
-													/>
-												) : (
-													<>Get Started</>
-												)}
-											</AtomButton>
-										</Box>
-									</Fade>
-								)}
-							</Popper>
-						)}
-						{role === null && (
-							<>
+					)}
+
+					{role === "learner" && !instructorReference && (
+						<Popper
+							id="instructor-popper"
+							open={open}
+							anchorEl={instructorPopper}
+							onMouseEnter={handleMouseEnterPopper}
+							onMouseLeave={handleMouseLeavePopper}
+							transition
+							placement="bottom"
+						>
+							{({ TransitionProps }) => (
+								<Fade {...TransitionProps} timeout={350}>
+									<Box
+										sx={{
+											border: 1,
+											p: 1,
+											bgcolor: "background.paper",
+											width: "250px",
+											textAlign: "center",
+										}}
+									>
+										Turn what you know into an opportunity
+										and reach millions around the world
+										<AtomButton
+											variant="contained"
+											fullWidth
+											sx={{ mt: 1 }}
+											onClick={
+												handleOnClickTeachOnCoursedemyButton
+											}
+										>
+											{showCircularProgress === true ? (
+												<AtomCircularProgress
+													color="inherit"
+													size={25}
+												/>
+											) : (
+												<>Get Started</>
+											)}
+										</AtomButton>
+									</Box>
+								</Fade>
+							)}
+						</Popper>
+					)}
+
+					<AtomIconButton>
+						<ShoppingCartOutlinedIcon />
+					</AtomIconButton>
+
+					<Box sx={{ display: { xs: "none", sm: "flex" }, gap: 10 }}>
+						{!role && (
+							<Box sx={{ flexGrow: 1 }}>
 								<Link to="/user/signin">
 									<AtomButton
 										variant="outlined"
-										sx={{ mr: 2 }}>
+										sx={{ mr: 2, textTransform: "none" }}
+									>
 										Sign in
 									</AtomButton>
 								</Link>
+
 								<Link to="user/signup">
-									<AtomButton variant="contained"> Sign up</AtomButton>
+									<AtomButton
+										variant="contained"
+										sx={{ textTransform: "none" }}
+									>
+										Sign up
+									</AtomButton>
 								</Link>
-							</>
+							</Box>
 						)}
 						{role === "learner" && (
 							<>
-								<AtomButton variant="text">My Learning</AtomButton>
+								<AtomButton variant="text">
+									My Learning
+								</AtomButton>
+
 								<AtomIconButton>
 									<FavoriteBorderOutlinedIcon />
-								</AtomIconButton>
-								<AtomIconButton>
-									<ShoppingCartOutlinedIcon />
 								</AtomIconButton>
 							</>
 						)}
@@ -251,22 +304,12 @@ const HomePageHeader = () => {
 									aria-controls={menuId}
 									aria-haspopup="true"
 									onClick={handleProfileMenuOpen}
-									color="primary">
+									color="primary"
+								>
 									<AccountCircle />
 								</AtomIconButton>
 							</>
 						)}
-					</Box>
-					<Box sx={{ display: { xs: "flex", md: "none" } }}>
-						<AtomIconButton
-							size="large"
-							aria-label="show more"
-							aria-controls={mobileMenuId}
-							aria-haspopup="true"
-							onClick={handleMobileMenuOpen}
-							color="primary">
-							<MoreIcon />
-						</AtomIconButton>
 					</Box>
 				</Toolbar>
 			</AppBar>
@@ -284,7 +327,8 @@ const HomePageHeader = () => {
 					horizontal: "right",
 				}}
 				open={isMobileMenuOpen}
-				onClose={handleMobileMenuClose}>
+				onClose={handleMobileMenuClose}
+			>
 				<MenuItem onClick={handleProfileMenuOpen}>Profile</MenuItem>
 				<MenuItem onClick={handleSignout}>Sign out</MenuItem>
 			</MoleculeMenu>
@@ -302,9 +346,12 @@ const HomePageHeader = () => {
 					horizontal: "right",
 				}}
 				open={isMenuOpen}
-				onClose={handleMenuClose}>
+				onClose={handleMenuClose}
+			>
 				<MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-				<MenuItem onClick={handleSignoutAndCloseMenu}>Sign out</MenuItem>
+				<MenuItem onClick={handleSignoutAndCloseMenu}>
+					Sign out
+				</MenuItem>
 			</MoleculeMenu>
 		</Box>
 	);

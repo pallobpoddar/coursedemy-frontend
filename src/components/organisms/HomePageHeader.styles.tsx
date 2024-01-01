@@ -1,43 +1,26 @@
-import { styled, alpha } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 
-const Search = styled("div")(({ theme }) => ({
+const Search = styled("div")(() => ({
 	position: "relative",
 	border: "1px solid #5c5c5fde",
-	borderRadius: theme.shape.borderRadius,
-	backgroundColor: alpha(theme.palette.common.white, 0.15),
-	"&:hover": {
-		backgroundColor: alpha(theme.palette.common.white, 0.25),
-	},
-	marginRight: theme.spacing(2),
-	marginLeft: 0,
-	width: "100%",
-	[theme.breakpoints.up("sm")]: {
-		marginLeft: theme.spacing(3),
-		width: "auto",
-	},
+	borderRadius: "50px",
+	width: "50%",
 }));
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-	padding: theme.spacing(0, 2),
+const SearchIconWrapper = styled("div")(() => ({
+	padding: "20px",
 	height: "100%",
 	position: "absolute",
-	pointerEvents: "none",
 	display: "flex",
 	alignItems: "center",
-	justifyContent: "center",
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
 	color: "primary",
 	"& .MuiInputBase-input": {
 		padding: theme.spacing(1, 1, 1, 0),
-		paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-		transition: theme.transitions.create("width"),
-		width: "100%",
-		[theme.breakpoints.up("md")]: {
-			width: "20ch",
-		},
+		paddingLeft: `calc(1em + ${theme.spacing(6)})`,
 	},
 }));
 
